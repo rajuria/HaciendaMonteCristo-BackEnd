@@ -10,9 +10,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       username: {
+        references: {model: 'Users',key: 'username'},
+        allowNull: false,
         type: Sequelize.STRING
       },
       accessID: {
+        references: {model: 'Accesses',key: 'accessID'},
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {

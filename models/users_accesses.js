@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const users = require('./users');
 module.exports = (sequelize, DataTypes) => {
   class Users_Accesses extends Model {
     /**
@@ -10,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Users_Accesses.belongsTo(models.Users, { foreignKey: 'username', as: 'User' });
+      Users_Accesses.belongsTo(models.Accesses, { foreignKey: 'accessID', as: 'Access' });
     }
   }
   Users_Accesses.init({
