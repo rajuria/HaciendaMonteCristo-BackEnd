@@ -1,6 +1,7 @@
 'use strict';
 const {
-  Model
+  Model,
+  BelongsTo
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
@@ -10,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Users.HasMany(models.Users_Accesses, { foreignKey: 'username', as: 'UsersAccesses' });
+      Users.hasOne(models.Clients, { foreignKey: 'username', as: 'Client' });
     }
   }
   Users.init({

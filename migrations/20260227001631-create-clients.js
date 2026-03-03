@@ -3,13 +3,9 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Clients', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
       RTN: {
+        allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING
       },
       name: {
@@ -25,6 +21,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       username: {
+        references: {model: 'Users',key: 'username'},
         type: Sequelize.STRING
       },
       status: {
