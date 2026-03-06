@@ -16,7 +16,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Clients.init({
-    RTN: DataTypes.STRING,
+    RTN: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true,
+    },
     name: DataTypes.STRING,
     address: DataTypes.STRING,
     telephoneNumber: DataTypes.STRING,

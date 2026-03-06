@@ -1,29 +1,52 @@
 'use strict';
-const {
-  Model,
-  BelongsTo
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+const { Model, DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
   class Users extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      Users.HasMany(models.Users_Accesses, { foreignKey: 'username', as: 'UsersAccesses' });
-      Users.hasOne(models.Clients, { foreignKey: 'username', as: 'Client' });
+      Users.hasMany(models.Users_Accesses, {
+        foreignKey: 'username',
+        sourceKey: 'username',
+        as: 'UsersAccesses',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      Users.hasOne(models.Clients, {
+        foreignKey: 'username',
+        sourceKey: 'username',
+        as: 'Client',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
     }
   }
+
   Users.init({
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-    name: DataTypes.STRING,
-    roleID: DataTypes.STRING,
-    status: DataTypes.STRING
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    roleID: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   }, {
-    sequelize,
-    modelName: 'Users',
+    sequelize
   });
+
   return Users;
 };
