@@ -10,11 +10,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Accesses.HasMany(models.users_accesses, { foreignKey: 'accessID', as: 'UsersAccesses' });
+      Accesses.hasMany(models.Users_Accesses, { foreignKey: 'accessID', as: 'UsersAccesses' });
     }
   }
   Accesses.init({
-    accessID: DataTypes.STRING,
+    accessID: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true,
+    },
     name: DataTypes.STRING
   }, {
     sequelize,

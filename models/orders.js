@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.Clients, { foreignKey: 'RTN', as: 'Client' });
-      this.hasOne(models.transferconfirmations, { foreignKey: 'orderID', as: 'TransferConfirmation' });
+      this.hasOne(models.TransferConfirmations, { foreignKey: 'orderID', as: 'TransferConfirmation' });
       // define association here
     }
   }
