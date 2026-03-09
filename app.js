@@ -10,6 +10,7 @@ var dbTestRouter = require('./routes/dbTest');
 var UsersRouter = require('./routes/appUsers');
 var ClientsRouter = require('./routes/clients');
 var ProductsRouter = require('./routes/products');
+var InvoiceRouter = require('./routes/invoice');
 
 var app = express();
 
@@ -29,7 +30,7 @@ app.use('/api/dbTest', dbTestRouter);
 app.use('/api/users', UsersRouter);
 app.use('/api/clients', ClientsRouter);
 app.use('/api/products', ProductsRouter);
-
+app.use('/api/invoices', InvoiceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
