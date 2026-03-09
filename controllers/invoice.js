@@ -39,7 +39,43 @@ const getInvoiceByID = async (req, res) => {
     }
 };
 
+const createInvoice = async (req, res) => {
+    try {
+        let {
+            invoiceID,
+            orderID,
+            RTN,
+            status,
+            paymentMethod
+        } = req.body || {};
+
+        if (!invoiceID || !orderID || !RTN || !status || !paymentMethod) {
+            return res.status(400).json({
+                error: "invoiceID, orderID, RTN, status y paymentMethod son campos requeridos"
+            });
+        }
+
+        const created = await Invoice.create({
+            invoiceID,
+            orderID,
+            RTN,
+            status,
+            paymentMethod
+        });
+
+        res.status(201).json({
+            message: "Factura creada exitosamente",
+            data: created
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error en la Base de Datos" });
+    }
+};
+
 module.exports = {
     getAllInvoices,
-    getInvoiceByID
+    getInvoiceByID,
+    createInvoice
 };
