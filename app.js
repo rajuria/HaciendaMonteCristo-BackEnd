@@ -12,6 +12,7 @@ var ClientsRouter = require('./routes/clients');
 var ProductsRouter = require('./routes/products');
 var InvoiceRouter = require('./routes/invoice');
 var InvoiceDetailsRouter = require('./routes/invoiceDetails');
+var SignedInvoicesRouter = require('./routes/signedInvoices');
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use('/api/clients', ClientsRouter);
 app.use('/api/products', ProductsRouter);
 app.use('/api/invoices', InvoiceRouter);
 app.use('/api/invoice-details', InvoiceDetailsRouter);
+app.use('/api/signed-invoices', SignedInvoicesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
