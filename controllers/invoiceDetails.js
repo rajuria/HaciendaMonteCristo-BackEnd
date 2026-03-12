@@ -1,5 +1,29 @@
 const { InvoiceDetails } = require('../models');
 
+const getByInvoiceID = async (req, res) => {
+  try {
+    const { invoiceID } = req.params;
+    if (!invoiceID) {
+      return res.status(406).json({ error: 'Se requiere el ID de la factura para encontrar los detalles' });
+    }
+
+    const invoiceDetails = await InvoiceDetails.findAll({
+      where: { invoiceID }
+    });
+
+    if (!invoiceDetails) {
+      return res.status(404).json({ error: 'Detalle de factura no encontrado' });
+    }
+
+    res.json({
+      data: invoiceDetails
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error en la Base de Datos' });
+  }
+};
+
 const createInvoiceDetail = async (req, res) => {
     try {
         let {
@@ -62,5 +86,6 @@ const deleteInvoiceDetail = async (req, res) => {
 
 module.exports = {
     createInvoiceDetail,
-    deleteInvoiceDetail
+    deleteInvoiceDetail,
+    getByInvoiceID
 };
