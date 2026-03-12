@@ -35,6 +35,32 @@ const createInvoiceDetail = async (req, res) => {
     }
 };
 
+const deleteInvoiceDetail = async (req, res) => {
+    try {
+        const { invoiceDetailID } = req.params;
+        if (!invoiceDetailID) {
+            return res.status(400).json({ error: "invoiceDetailID es requerido" });
+        }
+
+        const deletedCount = await InvoiceDetails.destroy({
+            where: { invoiceDetailID }
+        });
+
+        if (deletedCount === 0) {
+            return res.status(404).json({ error: "Detalle de factura no encontrado" });
+        }
+
+        return res.json({
+            message: "Detalle de factura eliminado exitosamente",
+            invoiceDetailID
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Error en la Base de Datos" });
+    }
+};
+
 module.exports = {
-    createInvoiceDetail
+    createInvoiceDetail,
+    deleteInvoiceDetail
 };
