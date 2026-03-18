@@ -1,0 +1,47 @@
+get:
+  summary: Obtener un usuario por su nombre de usuario
+  description: Devuelve un usuario específico basado en su nombre de usuario.
+  tags: [ Users ]
+
+  parameters:
+  - name: username
+    in: path
+    required: true
+    schema:
+      type: string
+      example: "rajuria"
+
+  responses:
+    '200':
+      description: Usuario leído exitosamente
+      content:
+        application/json:
+          example:
+            message: "Usuario leído exitosamente"
+            data:
+              username: "rajuria"
+              name: "Rafael Gustavo Ajuria"
+              roleID: "2"
+              status: "activo"
+              createdAt: "2026-03-02T00:00:00.000Z"
+
+    '406':
+      description: Argumento invalido
+      content:
+        application/json:
+          example:
+            error: "Se requiere el nombre de usuario"
+
+    '404':
+      description: Usuario no encontrado
+      content:
+        application/json:
+          example:
+            error: "Usuario no encontrado"
+
+    '500':
+      description: Error en la Base de Datos
+      content:
+        application/json:
+          example:
+            error: "Error en la Base de Datos"
