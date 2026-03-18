@@ -1,0 +1,28 @@
+get:
+  summary: Obtener todos los usuarios
+  description: Devuelve una lista de todos los usuarios.
+  tags: [ Users ]
+  responses:
+    '200':
+      description: Usuarios leídos exitosamente
+      content:
+        application/json:
+          example:
+            message: "Usuarios leídos exitosamente"
+            data:
+              - username: "rajuria"
+                name: "Rafael Gustavo Ajuria"
+                roleID: "2"
+                status: "activo"
+                createdAt: "2026-03-02T00:00:00.000Z"
+              - username: "aleon"
+                name: "Andrea Leon"
+                roleID: "1"
+                status: "inactivo"
+                createdAt: "2026-03-05T00:00:00.000Z"
+    '500':
+      description: Error en la Base de Datos
+      content:
+        application/json:
+          example:
+            error: "Error en la Base de Datos"
