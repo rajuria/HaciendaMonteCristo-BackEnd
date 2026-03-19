@@ -17,3 +17,15 @@ paths:
     $ref: "./paths/createUser.yaml"
   /api/users/update/:{username}:
     $ref: "./paths/updateUserbyUsername.yaml"
+  /api/invoices/create:
+    $ref: "./paths/invoices.yaml#/createInvoice"
+  /api/invoices/get:
+    $ref: "./paths/invoices.yaml#/getAllInvoices"
+  /api/invoices/get/{invoiceID}:
+    $ref: "./paths/invoices.yaml#/getInvoiceByID"
+  /api/invoice-details/create:
+    $ref: "./paths/invoices.yaml#/createInvoiceDetail"
+  /api/invoice-details/get/{invoiceID}:
+    $ref: "./paths/invoices.yaml#/getInvoiceDetailsByInvoiceID"
+  /api/invoice-details/delete/{invoiceDetailID}:
+    $ref: "./paths/invoices.yaml#/deleteInvoiceDetail"

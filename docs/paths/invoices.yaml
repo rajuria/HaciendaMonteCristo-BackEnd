@@ -1,0 +1,275 @@
+createInvoice:
+  post:
+    summary: Crear factura
+    description: Crea una factura con los datos recibidos.
+    tags: [ Invoices ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - invoiceID
+              - orderID
+              - RTN
+              - status
+              - paymentMethod
+            properties:
+              invoiceID:
+                type: string
+                example: "F0001"
+              orderID:
+                type: string
+                example: "O0001"
+              RTN:
+                type: string
+                example: "08011985123999"
+              status:
+                type: string
+                example: "emitida"
+              paymentMethod:
+                type: string
+                example: "efectivo"
+    responses:
+      '201':
+        description: Factura creada exitosamente
+        content:
+          application/json:
+            example:
+              message: "Factura creada exitosamente"
+              data:
+                invoiceID: "F0001"
+                orderID: "O0001"
+                RTN: "08011985123999"
+                status: "emitida"
+                paymentMethod: "efectivo"
+      '400':
+        description: Faltan campos requeridos
+        content:
+          application/json:
+            example:
+              error: "invoiceID, orderID, RTN, status y paymentMethod son campos requeridos"
+      '500':
+        description: Error en la Base de Datos
+        content:
+          application/json:
+            example:
+              error: "Error en la Base de Datos"
+
+getAllInvoices:
+  get:
+    summary: Listar facturas
+    description: Devuelve todas las facturas registradas.
+    tags: [ Invoices ]
+    responses:
+      '200':
+        description: Facturas leídas exitosamente
+        content:
+          application/json:
+            example:
+              message: "Facturas leídas exitosamente"
+              count: 2
+              data:
+                - invoiceID: "F0001"
+                  orderID: "O0001"
+                  RTN: "08011985123999"
+                  status: "emitida"
+                  paymentMethod: "efectivo"
+                - invoiceID: "F0002"
+                  orderID: "O0002"
+                  RTN: "08011985001122"
+                  status: "anulada"
+                  paymentMethod: "tarjeta"
+      '500':
+        description: Error en la Base de Datos
+        content:
+          application/json:
+            example:
+              error: "Error en la Base de Datos"
+
+getInvoiceByID:
+  get:
+    summary: Obtener factura por ID
+    description: Devuelve la factura indicada por su invoiceID.
+    tags: [ Invoices ]
+    parameters:
+      - name: invoiceID
+        in: path
+        required: true
+        schema:
+          type: string
+          example: "F0001"
+    responses:
+      '200':
+        description: Factura leída exitosamente
+        content:
+          application/json:
+            example:
+              message: "Factura leída exitosamente"
+              data:
+                invoiceID: "F0001"
+                orderID: "O0001"
+                RTN: "08011985123999"
+                status: "emitida"
+                paymentMethod: "efectivo"
+      '400':
+        description: Falta invoiceID en la ruta
+        content:
+          application/json:
+            example:
+              error: "Se requiere el ID de la factura"
+      '404':
+        description: Factura no encontrada
+        content:
+          application/json:
+            example:
+              error: "Factura no encontrada"
+      '500':
+        description: Error en la Base de Datos
+        content:
+          application/json:
+            example:
+              error: "Error en la Base de Datos"
+
+createInvoiceDetail:
+  post:
+    summary: Crear detalle de factura
+    description: Agrega un detalle a una factura.
+    tags: [ InvoiceDetails ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - invoiceDetailID
+              - invoiceID
+              - productID
+              - quantity
+              - pricePerItem
+            properties:
+              invoiceDetailID:
+                type: string
+                example: "D0001"
+              invoiceID:
+                type: string
+                example: "F0001"
+              productID:
+                type: string
+                example: "P0005"
+              quantity:
+                type: integer
+                example: 2
+              pricePerItem:
+                type: number
+                format: float
+                example: 150.75
+    responses:
+      '201':
+        description: Detalle de factura creado exitosamente
+        content:
+          application/json:
+            example:
+              message: "Detalle de factura creado exitosamente"
+              data:
+                invoiceDetailID: "D0001"
+                invoiceID: "F0001"
+                productID: "P0005"
+                quantity: 2
+                pricePerItem: 150.75
+      '400':
+        description: Faltan campos requeridos
+        content:
+          application/json:
+            example:
+              error: "invoiceDetailID, invoiceID, productID, quantity y pricePerItem son campos requeridos"
+      '500':
+        description: Error en la Base de Datos
+        content:
+          application/json:
+            example:
+              error: "Error en la Base de Datos"
+
+getInvoiceDetailsByInvoiceID:
+  get:
+    summary: Obtener detalles por invoiceID
+    description: Lista todos los detalles asociados a una factura.
+    tags: [ InvoiceDetails ]
+    parameters:
+      - name: invoiceID
+        in: path
+        required: true
+        schema:
+          type: string
+          example: "F0001"
+    responses:
+      '200':
+        description: Detalles encontrados
+        content:
+          application/json:
+            example:
+              data:
+                - invoiceDetailID: "D0001"
+                  invoiceID: "F0001"
+                  productID: "P0005"
+                  quantity: 2
+                  pricePerItem: 150.75
+      '404':
+        description: Detalle de factura no encontrado
+        content:
+          application/json:
+            example:
+              error: "Detalle de factura no encontrado"
+      '406':
+        description: Falta invoiceID en la ruta
+        content:
+          application/json:
+            example:
+              error: "Se requiere el ID de la factura para encontrar los detalles"
+      '500':
+        description: Error en la Base de Datos
+        content:
+          application/json:
+            example:
+              error: "Error en la Base de Datos"
+
+deleteInvoiceDetail:
+  delete:
+    summary: Eliminar detalle de factura
+    description: Elimina un detalle de factura por su invoiceDetailID.
+    tags: [ InvoiceDetails ]
+    parameters:
+      - name: invoiceDetailID
+        in: path
+        required: true
+        schema:
+          type: string
+          example: "D0001"
+    responses:
+      '200':
+        description: Detalle eliminado exitosamente
+        content:
+          application/json:
+            example:
+              message: "Detalle de factura eliminado exitosamente"
+              invoiceDetailID: "D0001"
+      '400':
+        description: Falta invoiceDetailID en la ruta
+        content:
+          application/json:
+            example:
+              error: "invoiceDetailID es requerido"
+      '404':
+        description: Detalle de factura no encontrado
+        content:
+          application/json:
+            example:
+              error: "Detalle de factura no encontrado"
+      '500':
+        description: Error en la Base de Datos
+        content:
+          application/json:
+            example:
+              error: "Error en la Base de Datos"
