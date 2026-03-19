@@ -1,0 +1,44 @@
+'use strict';
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up (queryInterface, Sequelize) {
+    return queryInterface.bulkInsert("Clientes", [
+      {
+        RTN: "04102001003925",
+        name: "Rafael Ajuria",
+        telephoneNumber: "+504 3392-1612",
+        email: "rajuria@unitec.edu",
+        username: "rajuria",
+        status: "Activo",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        RTN: "04102001003926",
+        name: "María López",
+        telephoneNumber: "+504 3392-1613",
+        email: "mlopez@outlook.com",
+        username: "mlopez",
+        status: "Activo",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        RTN: "04102001003927",
+        name: "Carlos Martínez",
+        telephoneNumber: "+504 3392-1614",
+        email: "cmartinez@outlook.com",
+        username: "cmartinez",
+        status: "Activo",
+        createdAt: new Date(),
+        updatedAt: new Date()
+
+      }
+    ]);
+  },
+
+  async down (queryInterface, Sequelize) {
+    return queryInterface.bulkDelete("Clientes", null, {});
+  }
+};
