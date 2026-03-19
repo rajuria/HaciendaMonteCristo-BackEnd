@@ -13,6 +13,7 @@ var ProductsRouter = require('./routes/products');
 var InvoiceRouter = require('./routes/invoice');
 var InvoiceDetailsRouter = require('./routes/invoiceDetails');
 var SignedInvoicesRouter = require('./routes/signedInvoices');
+var TransferConfirmationsRouter = require('./routes/transferConfirmations');
 var swaggerSetup = require('./config/swagger.js');
 
 var app = express();
@@ -36,6 +37,7 @@ app.use('/api/products', ProductsRouter);
 app.use('/api/invoices', InvoiceRouter);
 app.use('/api/invoice-details', InvoiceDetailsRouter);
 app.use('/api/signed-invoices', SignedInvoicesRouter);
+app.use('/api/transfer-confirmations', TransferConfirmationsRouter);
 
 swaggerSetup(app);
 
