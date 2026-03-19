@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert("Clientes", [
+    return queryInterface.bulkInsert("Clients", [
       {
         RTN: "04102001003925",
         name: "Rafael Ajuria",
@@ -39,6 +39,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("Clientes", null, {});
+    return queryInterface.bulkDelete("Clients", null, {});
   }
 };
