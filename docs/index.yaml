@@ -18,14 +18,14 @@ paths:
   /api/users/update/:{username}:
     $ref: "./paths/updateUserbyUsername.yaml"
   /api/invoices/create:
-    $ref: "./paths/invoices.yaml#/createInvoice"
+    $ref: "./paths/createInvoice.yaml"
   /api/invoices/get:
-    $ref: "./paths/invoices.yaml#/getAllInvoices"
+    $ref: "./paths/getAllInvoices.yaml"
   /api/invoices/get/{invoiceID}:
-    $ref: "./paths/invoices.yaml#/getInvoiceByID"
+    $ref: "./paths/getInvoiceByID.yaml"
   /api/invoice-details/create:
-    $ref: "./paths/invoices.yaml#/createInvoiceDetail"
+    $ref: "./paths/createInvoiceDetail.yaml"
   /api/invoice-details/get/{invoiceID}:
-    $ref: "./paths/invoices.yaml#/getInvoiceDetailsByInvoiceID"
+    $ref: "./paths/getInvoiceDetailsByInvoiceID.yaml"
   /api/invoice-details/delete/{invoiceDetailID}:
-    $ref: "./paths/invoices.yaml#/deleteInvoiceDetail"
+    $ref: "./paths/deleteInvoiceDetail.yaml"
