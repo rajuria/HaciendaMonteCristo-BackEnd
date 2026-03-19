@@ -49,7 +49,33 @@ const createTransferConfirmation = async (req, res) => {
     }
 };
 
+const getTransferConfirmationByID = async (req, res) => {
+    try {
+        const { confirmationID } = req.params;
+        if (!confirmationID) {
+            return res.status(400).json({ error: "Se requiere el ID de la confirmación" });
+        }
+
+        const confirmation = await TransferConfirmations.findOne({
+            where: { confirmationID }
+        });
+
+        if (!confirmation) {
+            return res.status(404).json({ error: "Confirmación de transferencia no encontrada" });
+        }
+
+        res.json({
+            message: "Confirmación de transferencia leída exitosamente",
+            data: confirmation
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error en la Base de Datos" });
+    }
+};
+
 module.exports = {
     getAllTransferConfirmations,
-    createTransferConfirmation
+    createTransferConfirmation,
+    getTransferConfirmationByID
 };
