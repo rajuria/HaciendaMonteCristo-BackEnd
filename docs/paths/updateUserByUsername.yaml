@@ -1,0 +1,77 @@
+put:
+  summary: Actualizar un usuario
+  description: Actualiza los datos de un usuario existente. El nombre de usuario en el cuerpo debe coincidir con el de la ruta.
+  tags: [ Users ]
+  
+  parameters:
+    - name: username
+      in: path
+      required: true
+      schema:
+        type: string
+        example: "rajuria"
+
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+              description: Opcional, pero si se envía debe coincidir con el parámetro de la ruta.
+              example: "rajuria"
+            password:
+              type: string
+              example: "Unitec20232!"
+            name:
+              type: string
+              example: "Rafael Gustavo Ajuria Diaz"
+            roleID:
+              type: string
+              example: "2"
+            status:
+              type: string
+              example: "activo"
+
+  responses:
+    '200':
+      description: Usuario actualizado exitosamente
+      content:
+        application/json:
+          example:
+            message: "Usuario actualizado exitosamente"
+            data:
+              username: "rajuria"
+              name: "Rafael Gustavo Ajuria Modificado"
+              roleID: "2"
+              status: "activo"
+              createdAt: "2026-03-02T00:00:00.000Z"
+              updatedAt: "2026-03-18T17:00:00.000Z"
+
+    '400':
+      description: Error de validación (Falta el usuario en la ruta o el usuario no coincide)
+      content:
+        application/json:
+          examples:
+            FaltaUsuario:
+              value:
+                error: "El nombre de usuario es requerido en la ruta"
+            UsuarioNoCoincide:
+              value:
+                error: "El nombre de usuario no puede cambiarse"
+
+    '404':
+      description: Usuario no encontrado
+      content:
+        application/json:
+          example:
+            error: "Usuario no encontrado"
+
+    '500':
+      description: Error en la Base de Datos
+      content:
+        application/json:
+          example:
+            error: "Error en la Base de Datos"

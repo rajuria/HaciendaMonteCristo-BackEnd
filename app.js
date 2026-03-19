@@ -14,13 +14,14 @@ var InvoiceRouter = require('./routes/invoice');
 var InvoiceDetailsRouter = require('./routes/invoiceDetails');
 var SignedInvoicesRouter = require('./routes/signedInvoices');
 var TransferConfirmationsRouter = require('./routes/transferConfirmations');
+var swaggerSetup = require('./config/swagger.js');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+ 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -37,6 +38,8 @@ app.use('/api/invoices', InvoiceRouter);
 app.use('/api/invoice-details', InvoiceDetailsRouter);
 app.use('/api/signed-invoices', SignedInvoicesRouter);
 app.use('/api/transfer-confirmations', TransferConfirmationsRouter);
+
+swaggerSetup(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

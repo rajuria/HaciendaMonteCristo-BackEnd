@@ -1,0 +1,19 @@
+openapi: 3.0.0
+info:
+  title: Hacienda Montecristo APIs
+  description: Documentación de APIs del Back end del proyecto de la Hacienda Montecristo
+  version: 1.0.15
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /api/users/get:
+    $ref: "./paths/getAllUsers.yaml"
+  /api/users/get/:{username}:
+    $ref: "./paths/getByUsername.yaml"
+  /api/users/create:
+    $ref: "./paths/createUser.yaml"
+  /api/users/update/:{username}:
+    $ref: "./paths/updateUserbyUsername.yaml"
