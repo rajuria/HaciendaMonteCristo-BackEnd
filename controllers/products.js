@@ -85,21 +85,25 @@ const createProduct = async (req, res) => {
 const deleteProductByProductID = async (req, res) => {
   try {
     const { productID } = req.params;
+    
     if (!productID) {
       return res.status(400).json({ error: 'productID es requerido' });
     }
-    const deletedCount = await Products.destroy({
-      where: { productID }
-    });
 
-    if (deletedCount === 0) {
+    const [updatedCount] = await Products.update(
+      { status: 'Deshabilitado' },
+      { where: { productID } }
+    );
+    
+    if (updatedCount === 0) {
       return res.status(404).json({ error: 'Producto no encontrado' });
     }
 
     return res.json({
-      message: 'Producto eliminado exitosamente',
+      message: 'Producto deshabilitado exitosamente',
       productID
     });
+    
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: 'Error en la Base de Datos' });

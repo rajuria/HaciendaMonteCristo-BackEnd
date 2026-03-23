@@ -12,7 +12,7 @@ routes.get("/get",getAllProducts);
 routes.get("/get/stock",getAllProductsInStock);
 routes.get("/get/:productID",getByProductID);
 routes.post("/create",createProduct);
-routes.delete("/delete/:productID",deleteProductByProductID);
+routes.put("/delete/:productID",deleteProductByProductID);
 routes.put("/update/:productID",updateProductByProductID);
 
 module.exports = routes;
