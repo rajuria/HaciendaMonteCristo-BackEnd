@@ -34,10 +34,7 @@ app.use('/api/dbTest', dbTestRouter);
 app.use('/api/users', UsersRouter);
 app.use('/api/clients', ClientsRouter);
 app.use('/api/products', ProductsRouter);
-app.use('/api/invoices', InvoiceRouter);
-app.use('/api/invoice-details', InvoiceDetailsRouter);
-app.use('/api/signed-invoices', SignedInvoicesRouter);
-app.use('/api/transfer-confirmations', TransferConfirmationsRouter);
+app.use('/api/images', ImagesRouter);
 
 swaggerSetup(app);
 
