@@ -5,27 +5,27 @@ info:
   version: 1.0.15
 
 servers:
-  - url: http://localhost:3000/
+  - url: http://localhost:3000/api/
     description: Local development server
 
 paths:
-  /api/users/get:
+  /users/get:
     $ref: "./paths/getAllUsers.yaml"
-  /api/users/get/:{username}:
+  /users/get/:{username}:
     $ref: "./paths/getByUsername.yaml"
-  /api/users/create:
+  /users/create:
     $ref: "./paths/createUser.yaml"
-  /api/users/update/:{username}:
+  /users/update/:{username}:
     $ref: "./paths/updateUserbyUsername.yaml"
-  /api/invoices/create:
+  /invoices/create:
     $ref: "./paths/createInvoice.yaml"
-  /api/invoices/get:
+  /invoices/get:
     $ref: "./paths/getAllInvoices.yaml"
-  /api/invoices/get/{invoiceID}:
+  /invoices/get/{invoiceID}:
     $ref: "./paths/getInvoiceByID.yaml"
-  /api/invoice-details/create:
+  /invoice-details/create:
     $ref: "./paths/createInvoiceDetail.yaml"
-  /api/invoice-details/get/{invoiceID}:
+  /invoice-details/get/{invoiceID}:
     $ref: "./paths/getInvoiceDetailsByInvoiceID.yaml"
-  /api/invoice-details/delete/{invoiceDetailID}:
+  /invoice-details/delete/{invoiceDetailID}:
     $ref: "./paths/deleteInvoiceDetail.yaml"
