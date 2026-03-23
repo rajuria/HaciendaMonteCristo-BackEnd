@@ -16,7 +16,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   InvoiceDetails.init({
-    invoiceDetailID: DataTypes.STRING,
+    invoiceDetailID: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true,
+    },
     invoiceID: DataTypes.STRING,
     productID: DataTypes.STRING,
     quantity: DataTypes.INTEGER,

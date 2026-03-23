@@ -16,7 +16,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Images.init({
-    imageID: DataTypes.STRING,
+    imageID: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true,
+    },
     productID: DataTypes.STRING,
     image: DataTypes.STRING
   }, {

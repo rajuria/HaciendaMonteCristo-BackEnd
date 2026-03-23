@@ -16,7 +16,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Invoice.init({
-    invoiceID: DataTypes.STRING,
+    invoiceID: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true,
+    },
     orderID: DataTypes.STRING,
     RTN: DataTypes.STRING,
     status: DataTypes.STRING,
