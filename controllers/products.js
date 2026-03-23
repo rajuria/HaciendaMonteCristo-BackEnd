@@ -1,4 +1,5 @@
 const { Products } = require('../models');
+const { Op } = require('sequelize'); //Operadores de Sequelize
 
 const getAllProducts = async (req, res) => {
     try {
@@ -134,6 +135,28 @@ const updateProductByProductID = async (req, res) => {
   }
 };
 
+const getAllProductsInStock = async (req, res) => {
+    try {
+        const products = await Products.findAll({
+            where: {
+                stock: {
+                    [Op.gt]: 0
+                }
+            }
+        });
+
+        res.json({
+            message: "Productos leidos exitosamente",
+            count: products.length,
+            data: products
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error en la Base de Datos" });
+    }
+};
+
 
 
 
@@ -142,5 +165,6 @@ module.exports = {
     getByProductID,
     createProduct,
     deleteProductByProductID,
-    updateProductByProductID
+    updateProductByProductID,
+    getAllProductsInStock
 };
