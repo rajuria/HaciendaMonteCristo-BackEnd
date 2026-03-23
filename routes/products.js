@@ -6,8 +6,10 @@ let getByProductID = ProductController.getByProductID;
 let createProduct = ProductController.createProduct;
 let deleteProductByProductID = ProductController.deleteProductByProductID;
 let updateProductByProductID = ProductController.updateProductByProductID;
+let getAllProductsInStock = ProductController.getAllProductsInStock;
 
 routes.get("/get",getAllProducts);
+routes.get("/get/stock",getAllProductsInStock);
 routes.get("/get/:productID",getByProductID);
 routes.post("/create",createProduct);
 routes.delete("/delete/:productID",deleteProductByProductID);
