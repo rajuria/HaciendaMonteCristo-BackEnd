@@ -61,7 +61,34 @@ const AddImage = async (req, res) => {
   }
 };
 
+const deleteImage = async (req, res) => {
+  try {
+    const { imageID } = req.params;
+    if (!imageID) {
+      return res.status(400).json({ error: 'Se requiere el ID de la imagen' });
+    }
+
+    const deleted = await Users.destroy({
+      where: { imageID }
+    });
+
+    if (!deleted) {
+      return res.status(404).json({ error: 'Imagen no encontrada' });
+    }
+
+    res.json({
+      message: 'Imagen eliminada exitosamente'
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   getByProductID,
-  AddImage
+  AddImage,
+  deleteImage
 };
