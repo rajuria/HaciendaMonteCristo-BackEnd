@@ -12,6 +12,9 @@ module.exports = {
         references: {model: 'Clients',key: 'RTN'},
         type: Sequelize.STRING
       },
+      vendedor: {
+        type: Sequelize.STRING
+      },
       status: {
         type: Sequelize.STRING
       },

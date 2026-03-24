@@ -12,6 +12,14 @@ module.exports = (sequelize) => {
         onDelete: 'CASCADE',
       });
 
+      Users.hasMany(models.Orders, {
+        foreignKey: 'vendedor',
+        sourceKey: 'username',
+        as: 'OrdenesAsignadas',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
       Users.hasOne(models.Clients, {
         foreignKey: 'username',
         sourceKey: 'username',

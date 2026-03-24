@@ -13,6 +13,7 @@ const createOrder = async (req, res) => {
         const created = await Order.create({
             orderID,
             RTN,
+            Vendedor: '',
             status: status || 'Pendiente' 
         });
 
@@ -53,7 +54,25 @@ const modifyOrderStatus = async (req, res) => {
     }
 };
 
+const asignarOrden = async (orderID, vendedor) => {
+    try {
+        const order = await Order.findByPk(orderID);
+        if (!order) throw new Error('Orden no encontrada');
+        const userExists = await Users.findByPk(vendedor);
+        if (!userExists) throw new Error('El vendedor no existe');
+
+        await order.update({ vendedor });
+        
+        return order;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+};
+
+
 module.exports = {
     createOrder,
-    modifyOrderStatus
+    modifyOrderStatus,
+    asignarOrden
 };
