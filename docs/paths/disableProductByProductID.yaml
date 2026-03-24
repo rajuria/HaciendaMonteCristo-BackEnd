@@ -1,0 +1,71 @@
+post:
+  tags:
+    - Products
+  summary: Crear un nuevo producto
+  description: Este endpoint permite registrar un nuevo producto en el sistema. 
+               El producto puede crearse como activo o inactivo dependiendo de su disponibilidad.
+
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - productID
+            - name
+            - currentPrice
+            - currentStock
+          properties:
+            productID:
+              type: string
+              example: "P999"
+            name:
+              type: string
+              example: "Producto prueba"
+            currentPrice:
+              type: number
+              example: 100
+            currentStock:
+              type: integer
+              example: 10
+            status:
+              type: boolean
+              description: Indica si el producto está activo (true) o inactivo (false)
+              example: true
+
+  responses:
+    '201':
+      description: Producto creado exitosamente
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Producto creado correctamente
+              data:
+                type: object
+                properties:
+                  productID:
+                    type: string
+                    example: "P999"
+                  name:
+                    type: string
+                    example: "Producto prueba"
+                  currentPrice:
+                    type: number
+                    example: 100
+                  currentStock:
+                    type: integer
+                    example: 10
+                  status:
+                    type: boolean
+                    example: true
+
+    '400':
+      description: Datos inválidos o incompletos
+
+    '500':
+      description: Error interno del servidor

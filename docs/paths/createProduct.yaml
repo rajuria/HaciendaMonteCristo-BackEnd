@@ -1,0 +1,95 @@
+post:
+  tags:
+    - Products
+  summary: Crear un nuevo producto
+  description: Este endpoint permite registrar un nuevo producto en el sistema. 
+    El producto puede estar activo o inactivo dependiendo de su disponibilidad, 
+    así se evita eliminarlo por temas de inventario y facturación.
+
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - productID
+            - name
+            - currentPrice
+            - currentStock
+            - status
+          properties:
+            productID:
+              type: string
+              example: "P999"
+            name:
+              type: string
+              example: "Queso fresco"
+            description:
+              type: string
+              example: "Queso fresco de producción local"
+            currentPrice:
+              type: number
+              example: 100
+            currentStock:
+              type: integer
+              example: 10
+            status:
+              type: string
+              enum: [activo, inactivo]
+              example: "activo"
+
+  responses:
+    '201':
+      description: Producto creado exitosamente
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Producto creado exitosamente
+              data:
+                type: object
+                properties:
+                  productID:
+                    type: string
+                    example: "P999"
+                  name:
+                    type: string
+                    example: "Queso fresco"
+                  description:
+                    type: string
+                    example: "Queso fresco de producción local"
+                  currentPrice:
+                    type: number
+                    example: 100
+                  currentStock:
+                    type: integer
+                    example: 10
+                  status:
+                    type: string
+                    example: "activo"
+
+    '400':
+      description: Datos inválidos o incompletos
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Datos inválidos o incompletos
+
+    '500':
+      description: Error interno del servidor
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Error interno del servidor
