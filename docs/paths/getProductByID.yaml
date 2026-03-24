@@ -8,7 +8,8 @@ get:
       name: productID
       required: true
       schema:
-        type: integer
+        type: string
+        example: "P001"
   responses:
     '200':
       description: Producto encontrado exitosamente

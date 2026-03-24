@@ -1,0 +1,43 @@
+get:
+  tags:
+    - Products
+  summary: Obtener productos con stock disponible
+  description: Retorna todos los productos que tienen stock mayor a 0.
+
+  responses:
+    '200':
+      description: Lista de productos con stock disponible
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Productos leidos exitosamente
+              count:
+                type: integer
+                example: 5
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    productID:
+                      type: string
+                      example: "P001"
+                    name:
+                      type: string
+                      example: "Leche entera"
+                    currentPrice:
+                      type: number
+                      example: 35.5
+                    currentStock:
+                      type: integer
+                      example: 10
+                    status:
+                      type: string
+                      example: "Habilitado"
+
+    '500':
+      description: Error en la Base de Datos

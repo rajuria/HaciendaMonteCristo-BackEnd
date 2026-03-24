@@ -21,7 +21,6 @@ const getAllUsers = async (req, res) => {
     }
 };
 
-
 const getByUsername = async (req, res) => {
   try {
     const { username } = req.params;
