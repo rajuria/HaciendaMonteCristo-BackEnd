@@ -25,7 +25,7 @@ const getByUsername = async (req, res) => {
   try {
     const { username } = req.params;
     if (!username) {
-      return res.status(400).json({ error: 'Se requiere el nombre de usuario' });
+      return res.status(406).json({ error: 'Se requiere el nombre de usuario' });
     }
 
     const user = await Users.findOne({

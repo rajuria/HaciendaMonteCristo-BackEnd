@@ -1,0 +1,42 @@
+get:
+  summary: Obtener factura por ID
+  description: Devuelve la factura indicada por su invoiceID.
+  tags: [ Invoices ]
+  parameters:
+    - name: invoiceID
+      in: path
+      required: true
+      schema:
+        type: string
+        example: "F0001"
+  responses:
+    '200':
+      description: Factura leída exitosamente
+      content:
+        application/json:
+          example:
+            message: "Factura leída exitosamente"
+            data:
+              invoiceID: "F0001"
+              orderID: "O0001"
+              RTN: "08011985123999"
+              status: "emitida"
+              paymentMethod: "efectivo"
+    '400':
+      description: Falta invoiceID en la ruta
+      content:
+        application/json:
+          example:
+            error: "Se requiere el ID de la factura"
+    '404':
+      description: Factura no encontrada
+      content:
+        application/json:
+          example:
+            error: "Factura no encontrada"
+    '500':
+      description: Error en la Base de Datos
+      content:
+        application/json:
+          example:
+            error: "Error en la Base de Datos"

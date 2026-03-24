@@ -5,27 +5,27 @@ info:
   version: 1.0.15
 
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:3000/api/
     description: Local development server
 
 paths:
-  /api/users/get:
+  /users/get:
     $ref: "./paths/getAllUsers.yaml"
-  /api/users/get/:{username}:
+  /users/get/:{username}:
     $ref: "./paths/getByUsername.yaml"
-  /api/users/create:
+  /users/create:
     $ref: "./paths/createUser.yaml"
-  /api/users/update/:{username}:
+  /users/update/:{username}:
     $ref: "./paths/updateUserbyUsername.yaml"
-  /api/invoices/create:
-    $ref: "./paths/invoices.yaml#/createInvoice"
-  /api/invoices/get:
-    $ref: "./paths/invoices.yaml#/getAllInvoices"
-  /api/invoices/get/{invoiceID}:
-    $ref: "./paths/invoices.yaml#/getInvoiceByID"
-  /api/invoice-details/create:
-    $ref: "./paths/invoices.yaml#/createInvoiceDetail"
-  /api/invoice-details/get/{invoiceID}:
-    $ref: "./paths/invoices.yaml#/getInvoiceDetailsByInvoiceID"
-  /api/invoice-details/delete/{invoiceDetailID}:
-    $ref: "./paths/invoices.yaml#/deleteInvoiceDetail"
+  /invoices/create:
+    $ref: "./paths/createInvoice.yaml"
+  /invoices/get:
+    $ref: "./paths/getAllInvoices.yaml"
+  /invoices/get/{invoiceID}:
+    $ref: "./paths/getInvoiceByID.yaml"
+  /invoice-details/create:
+    $ref: "./paths/createInvoiceDetail.yaml"
+  /invoice-details/get/{invoiceID}:
+    $ref: "./paths/getInvoiceDetailsByInvoiceID.yaml"
+  /invoice-details/delete/{invoiceDetailID}:
+    $ref: "./paths/deleteInvoiceDetail.yaml"

@@ -1,0 +1,57 @@
+post:
+  summary: Crear un nuevo usuario
+  description: Registra un nuevo usuario en el sistema.
+  tags: [ Users ]
+  
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - username
+            - password
+            - name
+            - roleID
+          properties:
+            username:
+              type: string
+              example: "rajuria"
+            password:
+              type: string
+              example: "Unitec2025!"
+            name:
+              type: string
+              example: "Rafael Gustavo Ajuria"
+            roleID:
+              type: string
+              example: "1"
+
+  responses:
+    '201':
+      description: Usuario creado exitosamente
+      content:
+        application/json:
+          example:
+            message: "Usuario creado exitosamente"
+            data:
+              username: "rajuria"
+              name: "Rafael Gustavo Ajuria"
+              roleID: "1"
+              status: "activo"
+              createdAt: "2026-03-18T16:57:59.000Z"
+
+    '400':
+      description: Faltan campos requeridos
+      content:
+        application/json:
+          example:
+            error: "username, password, name y roleID son campos requeridos"
+
+    '500':
+      description: Error en el servidor
+      content:
+        application/json:
+          example:
+            error: "Validation error"

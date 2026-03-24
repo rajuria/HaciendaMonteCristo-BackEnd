@@ -1,0 +1,57 @@
+post:
+  summary: Crear factura
+  description: Crea una factura con los datos recibidos.
+  tags: [ Invoices ]
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - invoiceID
+            - orderID
+            - RTN
+            - status
+            - paymentMethod
+          properties:
+            invoiceID:
+              type: string
+              example: "F0001"
+            orderID:
+              type: string
+              example: "O0001"
+            RTN:
+              type: string
+              example: "08011985123999"
+            status:
+              type: string
+              example: "emitida"
+            paymentMethod:
+              type: string
+              example: "efectivo"
+  responses:
+    '201':
+      description: Factura creada exitosamente
+      content:
+        application/json:
+          example:
+            message: "Factura creada exitosamente"
+            data:
+              invoiceID: "F0001"
+              orderID: "O0001"
+              RTN: "08011985123999"
+              status: "emitida"
+              paymentMethod: "efectivo"
+    '400':
+      description: Faltan campos requeridos
+      content:
+        application/json:
+          example:
+            error: "invoiceID, orderID, RTN, status y paymentMethod son campos requeridos"
+    '500':
+      description: Error en la Base de Datos
+      content:
+        application/json:
+          example:
+            error: "Error en la Base de Datos"

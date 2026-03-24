@@ -1,0 +1,80 @@
+get:
+  summary: Obtener detalles por invoiceID
+  description: Lista todos los detalles asociados a una factura.
+  tags: [ InvoiceDetails ]
+  parameters:
+    - name: invoiceID
+      in: path
+      required: true
+      schema:
+        type: string
+        example: "F0001"
+  responses:
+    '200':
+      description: Detalles encontrados
+      content:
+        application/json:
+          example:
+            data:
+              - invoiceDetailID: "D0001"
+                invoiceID: "F0001"
+                productID: "P0005"
+                quantity: 2
+                pricePerItem: 150.75
+    '404':
+      description: Detalle de factura no encontrado
+      content:
+        application/json:
+          example:
+            error: "Detalle de factura no encontrado"
+    '406':
+      description: Falta invoiceID en la ruta
+      content:
+        application/json:
+          example:
+            error: "Se requiere el ID de la factura para encontrar los detalles"
+    '500':
+      description: Error en la Base de Datos
+      content:
+        application/json:
+          example:
+            error: "Error en la Base de Datos"
+
+deleteInvoiceDetail:
+delete:
+  summary: Eliminar detalle de factura
+  description: Elimina un detalle de factura por su invoiceDetailID.
+  tags: [ InvoiceDetails ]
+  parameters:
+    - name: invoiceDetailID
+      in: path
+      required: true
+      schema:
+        type: string
+        example: "D0001"
+  responses:
+    '200':
+      description: Detalle eliminado exitosamente
+      content:
+        application/json:
+          example:
+            message: "Detalle de factura eliminado exitosamente"
+            invoiceDetailID: "D0001"
+    '400':
+      description: Falta invoiceDetailID en la ruta
+      content:
+        application/json:
+          example:
+            error: "invoiceDetailID es requerido"
+    '404':
+      description: Detalle de factura no encontrado
+      content:
+        application/json:
+          example:
+            error: "Detalle de factura no encontrado"
+    '500':
+      description: Error en la Base de Datos
+      content:
+        application/json:
+          example:
+            error: "Error en la Base de Datos"

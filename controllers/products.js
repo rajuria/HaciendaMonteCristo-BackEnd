@@ -1,32 +1,33 @@
 const { Products } = require('../models');
-const { Op } = require('sequelize'); // Operadores de Sequelize
+const { Op } = require('sequelize'); //Operadores de Sequelize
 
 const getAllProducts = async (req, res) => {
-  try {
-    const products = await Products.findAll();
+    try {
+        const products = await Products.findAll();
 
-    res.json({
-      message: 'Productos leidos exitosamente',
-      count: products.length,
-      data: products
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error en la Base de Datos' });
-  }
+        res.json({
+            message: "Productos leidos exitosamente",
+            count: products.length,
+            data: products
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error en la Base de Datos" });
+    }
 };
+
 
 const getByProductID = async (req, res) => {
   try {
     const { productID } = req.params;
-
     if (!productID) {
       return res.status(400).json({ error: 'Se requiere el ID del producto' });
     }
 
     const product = await Products.findOne({
       where: { productID },
-      attributes: ['productID', 'name', 'currentPrice', 'currentStock', 'status']
+      attributes: ['productID', 'name', 'currentPrice', 'currentStock']
     });
 
     if (!product) {
@@ -46,31 +47,32 @@ const getByProductID = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     let {
-      productID,
-      name,
-      currentPrice,
-      currentStock,
-      status
+        productID,
+        name,
+        currentPrice,
+        currentStock
     } = req.body || {};
 
-    if (!productID || !name || currentPrice === undefined || currentStock === undefined) {
-      return res.status(400).json({
-        error: 'productID, name, currentPrice y currentStock son campos requeridos'
-      });
+    if (!productID || !name || !currentPrice || !currentStock) {
+        return res.status(400).json({
+            error: 'productID, name, currentPrice y currentStock son campos requeridos'
+        });
     }
 
     const created = await Products.create({
-      productID,
-      name,
-      currentPrice,
-      currentStock,
-      status: status || 'Habilitado'
+        productID,
+        name,
+        currentPrice,
+        currentStock
     });
 
-    res.status(201).json({
-      message: 'Producto creado exitosamente',
-      data: created
-    });
+    res
+      .status(201)
+      .json({
+        message: 'Producto creado exitosamente',
+        data: created
+      });
+
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({
@@ -79,35 +81,35 @@ const createProduct = async (req, res) => {
   }
 };
 
-const disableProductByProductID = async (req, res) => {
+
+const deleteProductByProductID = async (req, res) => {
   try {
     const { productID } = req.params;
-
+    
     if (!productID) {
       return res.status(400).json({ error: 'productID es requerido' });
     }
 
-    const product = await Products.findOne({
-      where: { productID }
-    });
-
-    if (!product) {
+    const [updatedCount] = await Products.update(
+      { status: 'Deshabilitado' },
+      { where: { productID } }
+    );
+    
+    if (updatedCount === 0) {
       return res.status(404).json({ error: 'Producto no encontrado' });
     }
 
-    await product.update({
-      status: 'Deshabilitado'
-    });
-
     return res.json({
       message: 'Producto deshabilitado exitosamente',
-      data: product
+      productID
     });
+    
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: 'Error en la Base de Datos' });
   }
 };
+
 
 const updateProductByProductID = async (req, res) => {
   try {
@@ -117,9 +119,7 @@ const updateProductByProductID = async (req, res) => {
       return res.status(400).json({ error: 'El ID del producto es requerido en la ruta' });
     }
 
-    const product = await Products.findOne({
-      where: { productID }
-    });
+    const product = await Products.findByPk(productID);
 
     if (!product) {
       return res.status(404).json({ error: 'Producto no encontrado' });
@@ -128,9 +128,7 @@ const updateProductByProductID = async (req, res) => {
     if (req.body.productID && req.body.productID !== productID) {
       return res.status(400).json({ error: 'El ID del producto no puede cambiarse' });
     }
-
     await product.update(req.body);
-
     return res.json({
       message: 'Producto actualizado exitosamente',
       data: product
@@ -142,31 +140,35 @@ const updateProductByProductID = async (req, res) => {
 };
 
 const getAllProductsInStock = async (req, res) => {
-  try {
-    const products = await Products.findAll({
-      where: {
-        currentStock: {
-          [Op.gt]: 0
-        }
-      }
-    });
+    try {
+        const products = await Products.findAll({
+            where: {
+                stock: {
+                    [Op.gt]: 0
+                }
+            }
+        });
 
-    res.json({
-      message: 'Productos leidos exitosamente',
-      count: products.length,
-      data: products
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error en la Base de Datos' });
-  }
+        res.json({
+            message: "Productos leidos exitosamente",
+            count: products.length,
+            data: products
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error en la Base de Datos" });
+    }
 };
 
+
+
+
 module.exports = {
-  getAllProducts,
-  getByProductID,
-  createProduct,
-  disableProductByProductID,
-  updateProductByProductID,
-  getAllProductsInStock
+    getAllProducts,
+    getByProductID,
+    createProduct,
+    deleteProductByProductID,
+    updateProductByProductID,
+    getAllProductsInStock
 };

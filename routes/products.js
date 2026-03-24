@@ -1,20 +1,18 @@
-const express = require('express');
-const router = express.Router();
+var routes = require("express").Router();
 
-const {
-  getAllProducts,
-  getByProductID,
-  createProduct,
-  disableProductByProductID,
-  updateProductByProductID,
-  getAllProductsInStock
-} = require('../controllers/products.controller');
+var ProductController = require("../controllers/products");
+let getAllProducts = ProductController.getAllProducts;
+let getByProductID = ProductController.getByProductID;
+let createProduct = ProductController.createProduct;
+let deleteProductByProductID = ProductController.deleteProductByProductID;
+let updateProductByProductID = ProductController.updateProductByProductID;
+let getAllProductsInStock = ProductController.getAllProductsInStock;
 
-router.get('/', getAllProducts);
-router.get('/stock', getAllProductsInStock);
-router.get('/:productID', getByProductID);
-router.post('/', createProduct);
-router.put('/:productID', updateProductByProductID);
-router.delete('/:productID', disableProductByProductID);
+routes.get("/get",getAllProducts);
+routes.get("/get/stock",getAllProductsInStock);
+routes.get("/get/:productID",getByProductID);
+routes.post("/create",createProduct);
+routes.put("/delete/:productID",deleteProductByProductID);
+routes.put("/update/:productID",updateProductByProductID);
 
-module.exports = router;
+module.exports = routes;
