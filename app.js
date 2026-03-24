@@ -10,10 +10,8 @@ var dbTestRouter = require('./routes/dbTest');
 var UsersRouter = require('./routes/appUsers');
 var ClientsRouter = require('./routes/clients');
 var ProductsRouter = require('./routes/products');
-var InvoiceRouter = require('./routes/invoice');
-var InvoiceDetailsRouter = require('./routes/invoiceDetails');
-var SignedInvoicesRouter = require('./routes/signedInvoices');
-var TransferConfirmationsRouter = require('./routes/transferConfirmations');
+var ImagesRouter = require('./routes/images');
+var OrdersRouter = require('./routes/orders');
 var swaggerSetup = require('./config/swagger.js');
 
 var app = express();
@@ -35,6 +33,7 @@ app.use('/api/users', UsersRouter);
 app.use('/api/clients', ClientsRouter);
 app.use('/api/products', ProductsRouter);
 app.use('/api/images', ImagesRouter);
+app.use('/api/orders', OrdersRouter);
 
 swaggerSetup(app);
 
