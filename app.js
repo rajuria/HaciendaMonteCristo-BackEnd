@@ -12,6 +12,7 @@ var ClientsRouter = require('./routes/clients');
 var ProductsRouter = require('./routes/products');
 var ImagesRouter = require('./routes/images');
 var OrdersRouter = require('./routes/orders');
+var OrderDetailsRouter = require('./routes/orderDetails');
 var swaggerSetup = require('./config/swagger.js');
 
 var app = express();
@@ -34,6 +35,7 @@ app.use('/api/clients', ClientsRouter);
 app.use('/api/products', ProductsRouter);
 app.use('/api/images', ImagesRouter);
 app.use('/api/orders', OrdersRouter);
+app.use('/api/orderDetails', OrderDetailsRouter);
 
 swaggerSetup(app);
 
