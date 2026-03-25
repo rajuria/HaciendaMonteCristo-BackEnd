@@ -1,0 +1,20 @@
+patch:
+  summary: Desactivar una orden
+  tags:
+    - Orders
+  parameters:
+    - in: path
+      name: orderID
+      required: true
+      schema:
+        type: string
+      description: ID de la orden
+  responses:
+    200:
+      description: Orden desactivada correctamente
+      content:
+        application/json:
+          example:
+            message: Orden desactivada correctamente
+    404:
+      description: Orden no encontrada

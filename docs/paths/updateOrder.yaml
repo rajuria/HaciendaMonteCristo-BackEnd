@@ -1,0 +1,33 @@
+put:
+  summary: Actualizar una orden
+  tags:
+    - Orders
+  parameters:
+    - in: path
+      name: orderID
+      required: true
+      schema:
+        type: string
+      description: ID de la orden
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            RTN:
+              type: string
+              example: "0801190012345"
+            status:
+              type: string
+              example: "pendiente"
+  responses:
+    200:
+      description: Orden actualizada correctamente
+      content:
+        application/json:
+          example:
+            message: Orden actualizada exitosamente
+    404:
+      description: Orden no encontrada

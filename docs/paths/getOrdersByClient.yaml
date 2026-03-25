@@ -1,0 +1,24 @@
+get:
+  summary: Obtener órdenes por cliente
+  tags:
+    - Orders
+  parameters:
+    - in: path
+      name: RTN
+      required: true
+      schema:
+        type: string
+      description: RTN del cliente
+  responses:
+    200:
+      description: Lista de órdenes del cliente
+      content:
+        application/json:
+          example:
+            message: Órdenes obtenidas correctamente
+            data:
+              - orderID: "O001"
+                RTN: "0801190012345"
+                status: "pendiente"
+    404:
+      description: No se encontraron órdenes
