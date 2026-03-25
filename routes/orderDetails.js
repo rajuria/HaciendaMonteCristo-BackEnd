@@ -4,9 +4,11 @@ var imagesController = require("../controllers/orderDetails");
 let createOrderDetail = imagesController.createOrderDetail;
 let getOrderDetailsByOrderID = imagesController.getOrderDetailsByOrderID;
 let modifyOrderDetail = imagesController.modifyOrderDetail;
+let deleteOrderDetail = imagesController.deleteOrderDetail;
 
 routes.post("/create", createOrderDetail);
 routes.get("/get/:orderID", getOrderDetailsByOrderID);
 routes.put("/modify/:orderDetailID", modifyOrderDetail);
+routes.delete("/delete/:orderDetailID", deleteOrderDetail);
 
 module.exports = routes;
