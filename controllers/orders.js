@@ -83,9 +83,34 @@ const solicitarCancelacion = async (orderID) => {
     }
 };
 
+const aprobarCancelacion = async (req, res) => {
+    try {
+        const { orderID } = req.params;
+
+        const order = await Order.findByPk(orderID);
+
+        if (!order) {
+            return res.status(404).json({ error: 'Orden no encontrada' });
+        }
+
+        await order.update({ status: 'Cancelada' });
+
+        res.json({
+            message: 'Cancelacion aprobada exitosamente',
+            data: order
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({
+            error: error.message
+        });
+    }
+};
+
 module.exports = {
     createOrder,
     modifyOrderStatus,
     asignarOrden,
-    solicitarCancelacion
+    solicitarCancelacion,
+    aprobarCancelacion
 };
