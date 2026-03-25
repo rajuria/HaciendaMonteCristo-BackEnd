@@ -70,9 +70,22 @@ const asignarOrden = async (orderID, vendedor) => {
     }
 };
 
+const solicitarCancelacion = async (orderID) => {
+    try {
+        const order = await Order.findByPk(orderID);
+        if (!order) throw new Error('Orden no encontrada');
+
+        await order.update({ status: 'Cancelacion Pendiente' });
+        return order;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+};
 
 module.exports = {
     createOrder,
     modifyOrderStatus,
-    asignarOrden
+    asignarOrden,
+    solicitarCancelacion
 };
