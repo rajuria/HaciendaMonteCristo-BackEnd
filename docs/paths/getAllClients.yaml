@@ -1,0 +1,33 @@
+get:
+  summary: Obtener todos los clientes
+  description: Devuelve una lista de todos los clientes registrados en la base de datos.
+  tags: [ Clients ]
+  responses:
+    '200':
+      description: Clientes leídos exitosamente
+      content:
+        application/json:
+          example:
+            message: "Clientes leidos exitosamente"
+            count: 2
+            data:
+              - RTN: "0801199501234"
+                name: "Empresa S.A."
+                address: "Barrio Centro, Ave 1"
+                telephoneNumber: "2233-4455"
+                email: "contacto@empresa.com"
+                username: "johndoe"
+                status: "activo"
+              - RTN: "0501199012345"
+                name: "Juan Perez"
+                address: "Colonia Trejo"
+                telephoneNumber: "9988-7766"
+                email: "juan@correo.com"
+                username: null
+                status: "activo"
+    '500':
+      description: Error en la Base de Datos
+      content:
+        application/json:
+          example:
+            error: "Error en la Base de Datos"

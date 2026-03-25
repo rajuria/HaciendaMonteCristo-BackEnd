@@ -1,6 +1,6 @@
 get:
   summary: Obtener todos los usuarios
-  description: Devuelve una lista de todos los usuarios.
+  description: Devuelve una lista de todos los usuarios registrados con sus atributos principales.
   tags: [ Users ]
   responses:
     '200':
@@ -8,7 +8,8 @@ get:
       content:
         application/json:
           example:
-            message: "Usuarios leídos exitosamente"
+            message: "Usuarios leidos exitosamente"
+            count: 2
             data:
               - username: "rajuria"
                 name: "Rafael Gustavo Ajuria"

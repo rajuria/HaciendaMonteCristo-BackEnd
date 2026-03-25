@@ -1,4 +1,4 @@
-const { Users } = require('../models');
+const { Images } = require('../models');
 
 const getByProductID = async (req, res) => {
   try {
@@ -7,7 +7,7 @@ const getByProductID = async (req, res) => {
       return res.status(406).json({ error: 'Se requiere el ID del producto' });
     }
 
-    const images = await Users.findAll({
+    const images = await Images.findAll({
       where: { productID },
       attributes: ['imageID', 'productID', 'image']
     });
@@ -40,7 +40,7 @@ const AddImage = async (req, res) => {
         });
     }
 
-    const created = await Users.create({
+    const created = await Images.create({
         imageID,
         productID,
         image
@@ -68,7 +68,7 @@ const deleteImage = async (req, res) => {
       return res.status(400).json({ error: 'Se requiere el ID de la imagen' });
     }
 
-    const deleted = await Users.destroy({
+    const deleted = await Images.destroy({
       where: { imageID }
     });
 

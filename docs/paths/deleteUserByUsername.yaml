@@ -1,0 +1,34 @@
+delete:
+  summary: Eliminar un usuario
+  description: Elimina un usuario del sistema permanentemente usando su username.
+  tags: [ Users ]
+  parameters:
+    - in: path
+      name: username
+      required: true
+      schema:
+        type: string
+      description: El nombre de usuario a eliminar
+      example: "johndoe"
+  responses:
+    '200':
+      description: Usuario eliminado exitosamente
+      content:
+        application/json:
+          example:
+            message: "Usuario eliminado exitosamente"
+            username: "johndoe"
+    '400':
+      description: Username es requerido en la ruta
+      content:
+        application/json:
+          example:
+            error: "username es requerido"
+    '404':
+      description: Usuario no encontrado
+      content:
+        application/json:
+          example:
+            error: "Usuario no encontrado"
+    '500':
+      description: Error en la Base de Datos

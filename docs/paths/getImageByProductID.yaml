@@ -1,0 +1,43 @@
+get:
+  summary: Obtener imágenes por ID de producto
+  description: Retorna todas las imágenes asociadas a un producto específico.
+  tags: [ Images ]
+  parameters:
+    - in: path
+      name: productID
+      required: true
+      schema:
+        type: integer
+      example: 99
+  responses:
+    '200':
+      description: Imágenes leídas exitosamente
+      content:
+        application/json:
+          example:
+            message: "Imagenes leidas exitosamente"
+            data:
+              - imageID: 1
+                productID: 99
+                image: "https://example.com/images/product99-1.jpg"
+              - imageID: 2
+                productID: 99
+                image: "https://example.com/images/product99-2.jpg"
+    '404':
+      description: Imágenes no encontradas
+      content:
+        application/json:
+          example:
+            error: "Imagenes no encontradas"
+    '406':
+      description: Falta el ID del producto
+      content:
+        application/json:
+          example:
+            error: "Se requiere el ID del producto"
+    '500':
+      description: Error en el servidor
+      content:
+        application/json:
+          example:
+            error: "Error en la Base de Datos"

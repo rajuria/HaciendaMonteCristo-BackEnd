@@ -1,0 +1,41 @@
+get:
+  summary: Obtener cliente por RTN
+  description: Devuelve los detalles de un cliente específico buscando por su RTN.
+  tags: [ Clients ]
+  parameters:
+    - in: path
+      name: RTN
+      required: true
+      schema:
+        type: string
+      description: El Registro Tributario Nacional (RTN) del cliente
+      example: "0801199501234"
+  responses:
+    '200':
+      description: Cliente leído exitosamente
+      content:
+        application/json:
+          example:
+            message: "Cliente leido exitosamente"
+            data:
+              RTN: "0801199501234"
+              name: "Empresa S.A."
+              address: "Barrio Centro, Ave 1"
+              telephoneNumber: "2233-4455"
+              email: "contacto@empresa.com"
+              username: "johndoe"
+              status: "activo"
+    '400':
+      description: Falta el RTN en la petición
+      content:
+        application/json:
+          example:
+            error: "Se requiere el RTN del cliente"
+    '404':
+      description: Cliente no encontrado
+      content:
+        application/json:
+          example:
+            error: "Cliente no encontrado"
+    '500':
+      description: Error en la Base de Datos

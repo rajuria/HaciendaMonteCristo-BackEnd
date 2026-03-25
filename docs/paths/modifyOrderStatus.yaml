@@ -1,0 +1,35 @@
+put:
+  summary: Modificar estado de la orden
+  description: Actualiza el campo de estado de una orden específica.
+  tags: [ Orders ]
+  parameters:
+    - in: path
+      name: orderID
+      required: true
+      schema:
+        type: string
+      example: "ORD-001"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        example:
+          status: "En Proceso"
+  responses:
+    '200':
+      description: Estado actualizado
+      content:
+        application/json:
+          example:
+            message: "Estado actualizado"
+            data:
+              orderID: "ORD-001"
+              status: "En Proceso"
+    '404':
+      description: Orden no encontrada
+      content:
+        application/json:
+          example:
+            error: "Orden no encontrada"
+    '500':
+      description: Error en el servidor

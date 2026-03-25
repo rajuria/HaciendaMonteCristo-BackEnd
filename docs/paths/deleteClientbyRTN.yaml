@@ -1,0 +1,33 @@
+delete:
+  summary: Eliminar un cliente
+  description: Elimina un cliente permanentemente del sistema utilizando su RTN.
+  tags: [ Clients ]
+  parameters:
+    - in: path
+      name: RTN
+      required: true
+      schema:
+        type: string
+      example: "0801199501234"
+  responses:
+    '200':
+      description: Cliente eliminado exitosamente
+      content:
+        application/json:
+          example:
+            message: "Cliente eliminado exitosamente"
+            RTN: "0801199501234"
+    '400':
+      description: RTN es requerido
+      content:
+        application/json:
+          example:
+            error: "RTN es requerido"
+    '404':
+      description: Cliente no encontrado
+      content:
+        application/json:
+          example:
+            error: "Cliente no encontrado"
+    '500':
+      description: Error en la Base de Datos

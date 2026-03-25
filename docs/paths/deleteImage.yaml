@@ -1,0 +1,36 @@
+delete:
+  summary: Eliminar imagen
+  description: Elimina un registro de imagen de la base de datos utilizando su ID.
+  tags: [ Images ]
+  parameters:
+    - in: path
+      name: imageID
+      required: true
+      schema:
+        type: integer
+      example: 1
+  responses:
+    '200':
+      description: Imagen eliminada exitosamente
+      content:
+        application/json:
+          example:
+            message: "Imagen eliminada exitosamente"
+    '400':
+      description: Falta el ID de la imagen
+      content:
+        application/json:
+          example:
+            error: "Se requiere el ID de la imagen"
+    '404':
+      description: Imagen no encontrada
+      content:
+        application/json:
+          example:
+            error: "Imagen no encontrada"
+    '500':
+      description: Error en el servidor
+      content:
+        application/json:
+          example:
+            error: "Detalle del error interno del servidor"

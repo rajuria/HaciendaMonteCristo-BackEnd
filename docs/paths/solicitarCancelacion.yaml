@@ -1,0 +1,29 @@
+put:
+  summary: Solicitar cancelación de orden
+  description: Cambia el estado de una orden a 'Cancelacion Pendiente'.
+  tags: [ Orders ]
+  parameters:
+    - in: path
+      name: orderID
+      required: true
+      schema:
+        type: string
+      example: "ORD-001"
+  responses:
+    '200':
+      description: Cancelación solicitada exitosamente
+      content:
+        application/json:
+          example:
+            message: "Cancelación solicitada"
+            data:
+              orderID: "ORD-001"
+              status: "Cancelacion Pendiente"
+    '404':
+      description: Orden no encontrada
+      content:
+        application/json:
+          example:
+            error: "Orden no encontrada"
+    '500':
+      description: Error en el servidor

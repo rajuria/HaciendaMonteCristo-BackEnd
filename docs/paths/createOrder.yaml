@@ -1,0 +1,32 @@
+post:
+  summary: Crear una nueva orden
+  description: Genera una orden de compra para un cliente.
+  tags: [ Orders ]
+  requestBody:
+    required: true
+    content:
+      application/json:
+        example:
+          orderID: "ORD-001"
+          RTN: "0801199501234"
+          status: "Pendiente"
+  responses:
+    '201':
+      description: Orden creada exitosamente
+      content:
+        application/json:
+          example:
+            message: "Orden creada exitosamente"
+            data:
+              orderID: "ORD-001"
+              RTN: "0801199501234"
+              vendedor: null
+              status: "Pendiente"
+    '400':
+      description: Faltan campos requeridos
+      content:
+        application/json:
+          example:
+            error: "orderID y RTN son requeridos"
+    '500':
+      description: Error en el servidor

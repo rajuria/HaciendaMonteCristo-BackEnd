@@ -1,0 +1,45 @@
+put:
+  summary: Actualizar un producto
+  description: Modifica los detalles de un producto existente.
+  tags: [ Products ]
+  parameters:
+    - in: path
+      name: productID
+      required: true
+      schema:
+        type: string
+      example: "PROD-01"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        example:
+          name: "Café Tostado Premium (Nueva Imagen)"
+          currentPrice: 160.00
+          currentStock: 120
+  responses:
+    '200':
+      description: Producto actualizado
+      content:
+        application/json:
+          example:
+            message: "Producto actualizado exitosamente"
+            data:
+              productID: "PROD-01"
+              name: "Café Tostado Premium (Nueva Imagen)"
+              currentPrice: 160.00
+              currentStock: 120
+    '400':
+      description: Intento de cambiar el ID
+      content:
+        application/json:
+          example:
+            error: "El ID del producto no puede cambiarse"
+    '404':
+      description: Producto no encontrado
+      content:
+        application/json:
+          example:
+            error: "Producto no encontrado"
+    '500':
+      description: Error en la Base de Datos

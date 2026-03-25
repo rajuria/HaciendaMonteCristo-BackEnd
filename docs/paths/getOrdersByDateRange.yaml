@@ -1,0 +1,37 @@
+get:
+  summary: Obtener órdenes por fecha
+  description: Retorna órdenes creadas entre dos fechas.
+  tags: [ Orders ]
+  parameters:
+    - in: path
+      name: startDate
+      required: true
+      schema:
+        type: string
+        format: date
+      example: "2026-03-01"
+    - in: path
+      name: endDate
+      required: true
+      schema:
+        type: string
+        format: date
+      example: "2026-03-31"
+  responses:
+    '200':
+      description: Órdenes encontradas
+      content:
+        application/json:
+          example:
+            count: 2
+            data:
+              - orderID: "ORD-001"
+                status: "Pendiente"
+    '400':
+      description: Fechas faltantes
+      content:
+        application/json:
+          example:
+            error: "Faltan fechas start/end"
+    '500':
+      description: Error en el servidor
