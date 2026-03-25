@@ -30,6 +30,33 @@ const createOrderDetail = async (req, res) => {
     }
 };
 
+const getOrderDetailsByOrderID = async (req, res) => {
+    try {
+        const { orderID } = req.params;
+        const orderDetails = await OrderDetails.findAll({ where: { orderID } });
+        if (!orderID) {
+            return res.status(400).json({
+                error: 'orderID es un campo requerido'
+            });
+        }
+
+        if (!orderDetails || orderDetails.length === 0) {
+            return res.status(404).json({ error: 'No se encontraron detalles para esta orden' });
+        }
+
+        res.status(200).json({
+            message: 'Detalles de orden obtenidos exitosamente',
+            data: orderDetails
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({
+            error: error.message
+        });
+    }
+};
+
 module.exports = {
-    createOrderDetail
+    createOrderDetail,
+    getOrderDetailsByOrderID
 };
