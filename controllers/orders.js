@@ -54,6 +54,31 @@ const modifyOrderStatus = async (req, res) => {
     }
 };
 
+const getOrdersByClient = async (req, res) => {
+    try {
+        const { RTN } = req.params;
+        if (!RTN) {
+            return res.status(400).json({
+                error: 'Se requiere el RTN del cliente'
+            });
+        }
+        const orders = await Order.findAll({
+            where: { RTN }
+        });
+
+        res.json({
+            message: 'Ordenes del cliente leidas exitosamente',
+            count: orders.length,
+            data: orders
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({
+            error: error.message
+        });
+    }
+};
+
 const asignarOrden = async (orderID, vendedor) => {
     try {
         const order = await Order.findByPk(orderID);
@@ -86,6 +111,7 @@ const solicitarCancelacion = async (orderID) => {
 module.exports = {
     createOrder,
     modifyOrderStatus,
+    getOrdersByClient,
     asignarOrden,
     solicitarCancelacion
 };
