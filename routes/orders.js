@@ -6,11 +6,13 @@ let modifyOrderStatus = ordersController.modifyOrderStatus;
 let getOrdersByClient = ordersController.getOrdersByClient;
 let asignarOrden = ordersController.asignarOrden;
 let solicitarCancelacion = ordersController.solicitarCancelacion;
+let aprobarCancelacion = ordersController.aprobarCancelacion;
 
 routes.post("/create", createOrder);
 routes.put("/modifyStatus/:orderID", modifyOrderStatus);
 routes.get("/getByClient/:RTN", getOrdersByClient);
 routes.put("/asignarOrden/:orderID/:vendedor", asignarOrden);
 routes.put("/solicitarCancelacion/:orderID", solicitarCancelacion);
+routes.put("/aprobarCancelacion/:orderID", aprobarCancelacion);
 
 module.exports = routes;
