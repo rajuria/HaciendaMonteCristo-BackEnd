@@ -79,8 +79,29 @@ const modifyOrderDetail = async (req, res) => {
     }
 };
 
+const deleteOrderDetail = async (req, res) => {
+    try {
+        const { orderDetailID } = req.params;
+        const orderDetail = await OrderDetails.findByPk(orderDetailID);
+        if (!orderDetail) {
+            return res.status(404).json({ error: 'Detalle de orden no encontrado' });
+        }
+        await orderDetail.destroy();
+        res.status(200).json({
+            message: 'Detalle de orden eliminado exitosamente'
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({
+            error: error.message
+        });
+    }
+};
+
+
 module.exports = {
     createOrderDetail,
     getOrderDetailsByOrderID,
-    modifyOrderDetail
+    modifyOrderDetail,
+    deleteOrderDetail
 };
