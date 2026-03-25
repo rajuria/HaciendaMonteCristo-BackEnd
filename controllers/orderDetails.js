@@ -56,7 +56,31 @@ const getOrderDetailsByOrderID = async (req, res) => {
     }
 };
 
+const modifyOrderDetail = async (req, res) => {
+    try {
+        const { orderDetailID } = req.params;
+        const { quantity, price } = req.body || {};
+
+        const orderDetail = await OrderDetails.findByPk(orderDetailID);
+        if (!orderDetail) {
+            return res.status(404).json({ error: 'Detalle de orden no encontrado' });
+        }
+
+        await orderDetail.update({ quantity, price });
+        res.status(200).json({
+            message: 'Detalle de orden actualizado exitosamente',
+            data: orderDetail
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({
+            error: error.message
+        });
+    }
+};
+
 module.exports = {
     createOrderDetail,
-    getOrderDetailsByOrderID
+    getOrderDetailsByOrderID,
+    modifyOrderDetail
 };
