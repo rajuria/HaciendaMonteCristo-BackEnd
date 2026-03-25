@@ -1,33 +1,16 @@
 post:
   summary: Crear un nuevo usuario
-  description: Registra un nuevo usuario en el sistema.
+  description: Registra un nuevo usuario en el sistema. El estado se asigna automáticamente como 'activo'.
   tags: [ Users ]
-  
   requestBody:
     required: true
     content:
       application/json:
-        schema:
-          type: object
-          required:
-            - username
-            - password
-            - name
-            - roleID
-          properties:
-            username:
-              type: string
-              example: "rajuria"
-            password:
-              type: string
-              example: "Unitec2025!"
-            name:
-              type: string
-              example: "Rafael Gustavo Ajuria"
-            roleID:
-              type: string
-              example: "1"
-
+        example:
+          username: "jperez"
+          password: "password123"
+          name: "Juan Perez"
+          roleID: "1"
   responses:
     '201':
       description: Usuario creado exitosamente
@@ -36,21 +19,19 @@ post:
           example:
             message: "Usuario creado exitosamente"
             data:
-              username: "rajuria"
-              name: "Rafael Gustavo Ajuria"
+              username: "jperez"
+              password: "password123"
+              name: "Juan Perez"
               roleID: "1"
               status: "activo"
-              createdAt: "2026-03-18T16:57:59.000Z"
-
     '400':
       description: Faltan campos requeridos
       content:
         application/json:
           example:
             error: "username, password, name y roleID son campos requeridos"
-
     '500':
-      description: Error en el servidor
+      description: Error del servidor
       content:
         application/json:
           example:

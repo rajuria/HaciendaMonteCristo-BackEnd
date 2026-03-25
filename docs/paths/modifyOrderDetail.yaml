@@ -1,0 +1,56 @@
+patch:
+  summary: Modificar detalle de orden
+  description: Actualiza la cantidad o el precio de un detalle de orden.
+  tags: [ Order Details ]
+  parameters:
+    - in: path
+      name: orderDetailID
+      required: true
+      schema:
+        type: integer
+      example: 1
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            quantity:
+              type: integer
+            price:
+              type: number
+        example:
+          quantity: 3
+          price: 14.50
+  responses:
+    '200':
+      description: Detalle de orden actualizado exitosamente
+      content:
+        application/json:
+          example:
+            message: "Detalle de orden actualizado exitosamente"
+            data:
+              orderDetailID: 1
+              orderID: 1045
+              productID: 99
+              quantity: 3
+              price: 14.50
+    '400':
+      description: No se enviaron campos para actualizar
+      content:
+        application/json:
+          example:
+            error: "Debe proporcionar quantity o price para actualizar"
+    '404':
+      description: Detalle de orden no encontrado
+      content:
+        application/json:
+          example:
+            error: "Detalle de orden no encontrado"
+    '500':
+      description: Error en el servidor
+      content:
+        application/json:
+          example:
+            error: "Ocurrió un error en el servidor al actualizar el detalle."

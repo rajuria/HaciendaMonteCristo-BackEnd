@@ -1,0 +1,47 @@
+get:
+  summary: Obtener detalles por ID de orden
+  description: Retorna todos los detalles asociados a una orden específica.
+  tags: [ Order Details ]
+  parameters:
+    - in: path
+      name: orderID
+      required: true
+      schema:
+        type: integer
+      example: 1045
+  responses:
+    '200':
+      description: Detalles de orden obtenidos exitosamente
+      content:
+        application/json:
+          example:
+            message: "Detalles de orden obtenidos exitosamente"
+            data:
+              - orderDetailID: 1
+                orderID: 1045
+                productID: 99
+                quantity: 2
+                price: 15.50
+              - orderDetailID: 2
+                orderID: 1045
+                productID: 45
+                quantity: 1
+                price: 120.00
+    '400':
+      description: Falta el ID de la orden
+      content:
+        application/json:
+          example:
+            error: "orderID es un campo requerido"
+    '404':
+      description: No se encontraron detalles para esta orden
+      content:
+        application/json:
+          example:
+            error: "No se encontraron detalles para esta orden"
+    '500':
+      description: Error en el servidor
+      content:
+        application/json:
+          example:
+            error: "Ocurrió un error en el servidor al obtener los detalles."

@@ -1,0 +1,37 @@
+get:
+  summary: Obtener producto por ID
+  description: Devuelve los detalles específicos de un producto basado en su identificador único.
+  tags: [ Products ]
+  parameters:
+    - in: path
+      name: productID
+      required: true
+      schema:
+        type: string
+      example: "PROD-01"
+  responses:
+    '200':
+      description: Producto leído exitosamente
+      content:
+        application/json:
+          example:
+            message: "Producto leido exitosamente"
+            data:
+              productID: "PROD-01"
+              name: "Café Tostado Premium"
+              currentPrice: 150.50
+              currentStock: 100
+    '400':
+      description: Falta el ID del producto
+      content:
+        application/json:
+          example:
+            error: "Se requiere el ID del producto"
+    '404':
+      description: Producto no encontrado
+      content:
+        application/json:
+          example:
+            error: "Producto no encontrado"
+    '500':
+      description: Error en la Base de Datos

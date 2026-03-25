@@ -1,0 +1,23 @@
+get:
+  summary: Obtener productos con inventario
+  description: Retorna únicamente los productos que tienen un inventario (stock) mayor a cero.
+  tags: [ Products ]
+  responses:
+    '200':
+      description: Productos en stock recuperados
+      content:
+        application/json:
+          example:
+            message: "Productos leidos exitosamente"
+            count: 1
+            data:
+              - productID: "PROD-01"
+                name: "Café Tostado Premium"
+                currentPrice: 150.50
+                currentStock: 100
+    '500':
+      description: Error en la Base de Datos
+      content:
+        application/json:
+          example:
+            error: "Error en la Base de Datos"

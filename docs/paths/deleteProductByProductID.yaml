@@ -1,0 +1,33 @@
+delete:
+  summary: Deshabilitar un producto (Soft Delete)
+  description: En lugar de eliminar el registro de la base de datos, cambia su estado a 'Deshabilitado'.
+  tags: [ Products ]
+  parameters:
+    - in: path
+      name: productID
+      required: true
+      schema:
+        type: string
+      example: "PROD-01"
+  responses:
+    '200':
+      description: Producto deshabilitado exitosamente
+      content:
+        application/json:
+          example:
+            message: "Producto deshabilitado exitosamente"
+            productID: "PROD-01"
+    '400':
+      description: Falta el ID del producto
+      content:
+        application/json:
+          example:
+            error: "productID es requerido"
+    '404':
+      description: Producto no encontrado
+      content:
+        application/json:
+          example:
+            error: "Producto no encontrado"
+    '500':
+      description: Error en la Base de Datos

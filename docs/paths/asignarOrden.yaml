@@ -1,0 +1,36 @@
+put:
+  summary: Asignar orden a vendedor
+  description: Asigna un vendedor a una orden y cambia su estado a 'Asignada'.
+  tags: [ Orders ]
+  parameters:
+    - in: path
+      name: orderID
+      required: true
+      schema:
+        type: string
+      example: "ORD-001"
+    - in: path
+      name: vendedor
+      required: true
+      schema:
+        type: string
+      example: "juan_perez"
+  responses:
+    '200':
+      description: Orden asignada exitosamente
+      content:
+        application/json:
+          example:
+            message: "Orden asignada con éxito"
+            data:
+              orderID: "ORD-001"
+              vendedor: "juan_perez"
+              status: "Asignada"
+    '404':
+      description: Orden o Vendedor no encontrados
+      content:
+        application/json:
+          example:
+            error: "El vendedor no existe"
+    '500':
+      description: Error en el servidor

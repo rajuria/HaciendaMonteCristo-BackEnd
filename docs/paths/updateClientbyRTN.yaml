@@ -1,0 +1,47 @@
+put:
+  summary: Actualizar datos de un cliente
+  description: Modifica la información de un cliente existente. El sistema bloqueará cualquier intento de cambiar el RTN.
+  tags: [ Clients ]
+  parameters:
+    - in: path
+      name: RTN
+      required: true
+      schema:
+        type: string
+      example: "0801199501234"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        example:
+          name: "Nueva Empresa S.A."
+          address: "Nueva Dirección"
+          telephoneNumber: "9999-8888"
+  responses:
+    '200':
+      description: Cliente actualizado exitosamente
+      content:
+        application/json:
+          example:
+            message: "Cliente actualizado exitosamente"
+            data:
+              RTN: "0801199501234"
+              name: "Nueva Empresa S.A."
+              address: "Nueva Dirección"
+              telephoneNumber: "9999-8888"
+              email: "contacto@empresa.com"
+              status: "activo"
+    '400':
+      description: Error de validación de negocio
+      content:
+        application/json:
+          example:
+            error: "El RTN no puede cambiarse"
+    '404':
+      description: Cliente no encontrado
+      content:
+        application/json:
+          example:
+            error: "Cliente no encontrado"
+    '500':
+      description: Error en la Base de Datos

@@ -29,7 +29,7 @@ module.exports = {
         name: "Carlos Martínez",
         telephoneNumber: "+504 3392-1614",
         email: "cmartinez@outlook.com",
-        username: "cmartinez",
+        username: null,
         status: "Activo",
         createdAt: new Date(),
         updatedAt: new Date()

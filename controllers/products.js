@@ -143,7 +143,7 @@ const getAllProductsInStock = async (req, res) => {
     try {
         const products = await Products.findAll({
             where: {
-                stock: {
+                currentStock: {
                     [Op.gt]: 0
                 }
             }

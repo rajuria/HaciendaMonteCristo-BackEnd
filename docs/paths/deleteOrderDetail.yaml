@@ -1,0 +1,30 @@
+delete:
+  summary: Eliminar detalle de orden
+  description: Elimina un detalle de orden específico de la base de datos.
+  tags: [ Order Details ]
+  parameters:
+    - in: path
+      name: orderDetailID
+      required: true
+      schema:
+        type: integer
+      example: 1
+  responses:
+    '200':
+      description: Detalle de orden eliminado exitosamente
+      content:
+        application/json:
+          example:
+            message: "Detalle de orden eliminado exitosamente"
+    '404':
+      description: Detalle de orden no encontrado
+      content:
+        application/json:
+          example:
+            error: "Detalle de orden no encontrado"
+    '500':
+      description: Error en el servidor
+      content:
+        application/json:
+          example:
+            error: "Ocurrió un error en el servidor al eliminar el detalle."

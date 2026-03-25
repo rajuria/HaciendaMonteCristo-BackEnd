@@ -1,0 +1,23 @@
+get:
+  summary: Obtener órdenes de un cliente
+  description: Retorna todas las órdenes asociadas al RTN de un cliente.
+  tags: [ Orders ]
+  parameters:
+    - in: path
+      name: RTN
+      required: true
+      schema:
+        type: string
+      example: "0801199501234"
+  responses:
+    '200':
+      description: Órdenes recuperadas
+      content:
+        application/json:
+          example:
+            count: 1
+            data:
+              - orderID: "ORD-001"
+                RTN: "0801199501234"
+    '500':
+      description: Error en el servidor

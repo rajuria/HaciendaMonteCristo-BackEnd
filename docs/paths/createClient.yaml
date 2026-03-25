@@ -1,0 +1,42 @@
+post:
+  summary: Crear un nuevo cliente
+  description: Registra un nuevo cliente. El RTN, nombre, correo y teléfono son obligatorios.
+  tags: [ Clients ]
+  requestBody:
+    required: true
+    content:
+      application/json:
+        example:
+          RTN: "0801199501234"
+          name: "Empresa S.A."
+          address: "Barrio Centro, Ave 1"
+          telephoneNumber: "2233-4455"
+          email: "contacto@empresa.com"
+          username: "johndoe"
+  responses:
+    '201':
+      description: Cliente creado exitosamente
+      content:
+        application/json:
+          example:
+            message: "Cliente creado exitosamente"
+            data:
+              RTN: "0801199501234"
+              name: "Empresa S.A."
+              address: "Barrio Centro, Ave 1"
+              telephoneNumber: "2233-4455"
+              email: "contacto@empresa.com"
+              username: "johndoe"
+              status: "activo"
+    '400':
+      description: Faltan campos requeridos
+      content:
+        application/json:
+          example:
+            error: "RTN, name, email y telephoneNumber son campos requeridos"
+    '500':
+      description: Error del servidor
+      content:
+        application/json:
+          example:
+            error: "Validation error"

@@ -1,0 +1,24 @@
+get:
+  summary: Obtener órdenes de un vendedor
+  description: Devuelve la lista de órdenes que están asignadas a un vendedor específico.
+  tags: [ Orders ]
+  parameters:
+    - in: path
+      name: vendedor
+      required: true
+      schema:
+        type: string
+      example: "juan_perez"
+  responses:
+    '200':
+      description: Órdenes recuperadas
+      content:
+        application/json:
+          example:
+            count: 3
+            data:
+              - orderID: "ORD-002"
+                vendedor: "juan_perez"
+                status: "Asignada"
+    '500':
+      description: Error en el servidor

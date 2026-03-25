@@ -1,0 +1,44 @@
+post:
+  summary: Agregar nueva imagen
+  description: Registra una nueva imagen asociada a un producto.
+  tags: [ Images ]
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            imageID:
+              type: integer
+            productID:
+              type: integer
+            image:
+              type: string
+        example:
+          imageID: 1
+          productID: 99
+          image: "https://example.com/images/product99-1.jpg"
+  responses:
+    '201':
+      description: Imagen agregada exitosamente
+      content:
+        application/json:
+          example:
+            message: "Imagen agregada exitosamente"
+            data:
+              imageID: 1
+              productID: 99
+              image: "https://example.com/images/product99-1.jpg"
+    '400':
+      description: Faltan campos requeridos
+      content:
+        application/json:
+          example:
+            error: "imageID, productID y image son campos requeridos"
+    '500':
+      description: Error en el servidor
+      content:
+        application/json:
+          example:
+            error: "Detalle del error interno del servidor"

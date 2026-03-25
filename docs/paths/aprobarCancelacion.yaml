@@ -1,0 +1,29 @@
+put:
+  summary: Aprobar cancelación de orden
+  description: Finaliza la cancelación cambiando el estado de la orden a 'Cancelada'.
+  tags: [ Orders ]
+  parameters:
+    - in: path
+      name: orderID
+      required: true
+      schema:
+        type: string
+      example: "ORD-001"
+  responses:
+    '200':
+      description: Cancelación aprobada
+      content:
+        application/json:
+          example:
+            message: "Cancelacion aprobada"
+            data:
+              orderID: "ORD-001"
+              status: "Cancelada"
+    '404':
+      description: Orden no encontrada
+      content:
+        application/json:
+          example:
+            error: "Orden no encontrada"
+    '500':
+      description: Error en el servidor

@@ -1,0 +1,37 @@
+post:
+  summary: Crear un nuevo producto
+  description: Registra un nuevo producto en el catálogo.
+  tags: [ Products ]
+  requestBody:
+    required: true
+    content:
+      application/json:
+        example:
+          productID: "PROD-03"
+          name: "Miel Orgánica"
+          currentPrice: 120.00
+          currentStock: 50
+  responses:
+    '201':
+      description: Producto creado exitosamente
+      content:
+        application/json:
+          example:
+            message: "Producto creado exitosamente"
+            data:
+              productID: "PROD-03"
+              name: "Miel Orgánica"
+              currentPrice: 120.00
+              currentStock: 50
+    '400':
+      description: Faltan campos requeridos
+      content:
+        application/json:
+          example:
+            error: "productID, name, currentPrice y currentStock son campos requeridos"
+    '500':
+      description: Error del servidor
+      content:
+        application/json:
+          example:
+            error: "Validation error"

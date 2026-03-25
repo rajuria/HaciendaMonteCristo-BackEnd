@@ -1,40 +1,22 @@
 put:
-  summary: Actualizar un usuario
-  description: Actualiza los datos de un usuario existente. El nombre de usuario en el cuerpo debe coincidir con el de la ruta.
+  summary: Actualizar datos de un usuario
+  description: Modifica la información de un usuario existente. No permite cambiar el username.
   tags: [ Users ]
-  
   parameters:
-    - name: username
-      in: path
+    - in: path
+      name: username
       required: true
       schema:
         type: string
-        example: "rajuria"
-
+      example: "rajuria"
   requestBody:
     required: true
     content:
       application/json:
-        schema:
-          type: object
-          properties:
-            username:
-              type: string
-              description: Opcional, pero si se envía debe coincidir con el parámetro de la ruta.
-              example: "rajuria"
-            password:
-              type: string
-              example: "Unitec20232!"
-            name:
-              type: string
-              example: "Rafael Gustavo Ajuria Diaz"
-            roleID:
-              type: string
-              example: "2"
-            status:
-              type: string
-              example: "activo"
-
+        example:
+          name: "Rafael G. Ajuria"
+          status: "inactivo"
+          roleID: "3"
   responses:
     '200':
       description: Usuario actualizado exitosamente
@@ -44,34 +26,20 @@ put:
             message: "Usuario actualizado exitosamente"
             data:
               username: "rajuria"
-              name: "Rafael Gustavo Ajuria Modificado"
-              roleID: "2"
-              status: "activo"
-              createdAt: "2026-03-02T00:00:00.000Z"
-              updatedAt: "2026-03-18T17:00:00.000Z"
-
+              name: "Rafael G. Ajuria"
+              roleID: "3"
+              status: "inactivo"
     '400':
-      description: Error de validación (Falta el usuario en la ruta o el usuario no coincide)
+      description: Error de validación de negocio
       content:
         application/json:
-          examples:
-            FaltaUsuario:
-              value:
-                error: "El nombre de usuario es requerido en la ruta"
-            UsuarioNoCoincide:
-              value:
-                error: "El nombre de usuario no puede cambiarse"
-
+          example:
+            error: "El nombre de usuario no puede cambiarse"
     '404':
       description: Usuario no encontrado
       content:
         application/json:
           example:
             error: "Usuario no encontrado"
-
     '500':
       description: Error en la Base de Datos
-      content:
-        application/json:
-          example:
-            error: "Error en la Base de Datos"

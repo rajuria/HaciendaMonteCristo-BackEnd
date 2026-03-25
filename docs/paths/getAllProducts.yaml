@@ -1,0 +1,27 @@
+get:
+  summary: Obtener todos los productos
+  description: Devuelve el catálogo completo de productos sin importar su estado o inventario.
+  tags: [ Products ]
+  responses:
+    '200':
+      description: Productos leídos exitosamente
+      content:
+        application/json:
+          example:
+            message: "Productos leidos exitosamente"
+            count: 2
+            data:
+              - productID: "PROD-01"
+                name: "Café Tostado Premium"
+                currentPrice: 150.50
+                currentStock: 100
+              - productID: "PROD-02"
+                name: "Cacao en Polvo"
+                currentPrice: 85.00
+                currentStock: 0
+    '500':
+      description: Error en la Base de Datos
+      content:
+        application/json:
+          example:
+            error: "Error en la Base de Datos"
