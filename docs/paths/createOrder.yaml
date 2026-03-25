@@ -1,0 +1,31 @@
+post:
+  tags:
+    - Orders
+  summary: Crear una nueva orden
+  description: Registra una nueva orden en el sistema.
+
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - orderID
+            - RTN
+          properties:
+            orderID:
+              type: string
+              example: "O001"
+            RTN:
+              type: string
+              example: "08011999123456"
+            status:
+              type: string
+              example: "Pendiente"
+
+  responses:
+    '201':
+      description: Orden creada exitosamente
+    '400':
+      description: Datos inválidos

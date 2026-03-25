@@ -1,0 +1,19 @@
+get:
+  tags:
+    - Orders
+  summary: Obtener orden por ID
+  description: Retorna una orden específica.
+
+  parameters:
+    - in: path
+      name: orderID
+      required: true
+      schema:
+        type: string
+      example: "O001"
+
+  responses:
+    '200':
+      description: Orden encontrada
+    '404':
+      description: Orden no encontrada
