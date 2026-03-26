@@ -89,24 +89,21 @@ const deleteProductByProductID = async (req, res) => {
     if (!productID) {
       return res.status(400).json({ error: 'productID es requerido' });
     }
-
-    const [updatedCount] = await Products.update(
-      { status: 'Deshabilitado' },
-      { where: { productID } }
-    );
+    const product = await Products.findByPk(productID);
     
-    if (updatedCount === 0) {
-      return res.status(404).json({ error: 'Producto no encontrado' });
+    if (!product) {
+      return res.status(404).json({ error: 'El producto realmente no existe en la BD' });
     }
-
+    await product.update({ status: 'Deshabilitado' });
+    
     return res.json({
       message: 'Producto deshabilitado exitosamente',
       productID
     });
     
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Error en la Base de Datos' });
+    console.error("Error al deshabilitar:", error);
+    return res.status(500).json({ error: 'Error en la Base de Datos', detalle: error.message });
   }
 };
 
@@ -145,12 +142,15 @@ const getAllProductsInStock = async (req, res) => {
             where: {
                 currentStock: {
                     [Op.gt]: 0
+                },
+                status: {
+                    [Op.ne]: 'Deshabilitado'
                 }
             }
         });
 
         res.json({
-            message: "Productos leidos exitosamente",
+            message: "Productos en stock leídos exitosamente",
             count: products.length,
             data: products
         });

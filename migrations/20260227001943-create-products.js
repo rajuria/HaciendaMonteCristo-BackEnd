@@ -14,6 +14,11 @@ module.exports = {
       currentPrice: {
         type: Sequelize.DOUBLE
       },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'Activo'
+      },
       currentStock: {
         type: Sequelize.INTEGER
       },

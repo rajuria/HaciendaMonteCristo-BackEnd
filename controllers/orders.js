@@ -1,22 +1,116 @@
-const { Order, Users, Sequelize } = require('../models');
+const { Orders, OrderDetails, Users, Sequelize } = require('../models');
 const { Op } = Sequelize; 
+
+const getStats = async (req, res) => {
+    try {
+        const { startDate, endDate } = req.params;
+        
+        const cleanStart = startDate.substring(0, 10);
+        const cleanEnd = endDate.substring(0, 10);
+
+        const orders = await Orders.findAll({
+            where: {
+                createdAt: {
+                    [Op.between]: [
+                        `${cleanStart}T00:00:00.000Z`, 
+                        `${cleanEnd}T23:59:59.999Z`
+                    ]
+                }
+            },
+            include: [{
+                model: OrderDetails,
+                as: 'OrderDetails',
+                attributes: ['quantity', 'pricePerItem']
+            }]
+        });
+
+        let totalVendido = 0;
+        let countCompletados = 0;
+        let countCancelados = 0;
+        let countPendientes = 0;
+
+        const reportData = orders.map(order => {
+            const detalles = order.OrderDetails || [];
+            
+            const totalOrden = detalles.reduce((acc, item) => {
+                return acc + (parseFloat(item.pricePerItem) * item.quantity);
+            }, 0);
+            if (order.status === 'Completado') {
+                totalVendido += totalOrden;
+                countCompletados++;
+            } else if (order.status === 'Cancelada' || order.status === 'Cancelacion Pendiente') {
+                countCancelados++;
+            } else {
+                countPendientes++;
+            }
+
+            return {
+                orderID: order.orderID,
+                RTN: order.RTN,
+                status: order.status,
+                vendedor: order.vendedor,
+                fecha: order.createdAt,
+                total: totalOrden.toFixed(2)
+            };
+        });
+
+        res.json({
+            message: "Estadísticas generadas exitosamente",
+            stats: {
+                ingresosTotales: totalVendido.toFixed(2),
+                pedidosTotales: orders.length,
+                completados: countCompletados,
+                cancelados: countCancelados,
+                pendientes: countPendientes
+            },
+            data: reportData
+        });
+
+    } catch (error) {
+        console.error("Error en getStats:", error);
+        res.status(500).json({ error: "Error interno al procesar el reporte" });
+    }
+};
 
 const createOrder = async (req, res) => {
     try {
-        const { orderID, RTN, status } = req.body || {};
-        if (!orderID || !RTN) { 
-            return res.status(400).json({ error: 'orderID y RTN son requeridos' });
-        }
+        const { RTN, status, orderDetails } = req.body;
 
-        const created = await Order.create({
-            orderID,
+        if (!RTN) { 
+            return res.status(400).json({ error: 'El RTN es requerido' });
+        }
+        
+        const nuevoOrderID = "ORD-" + Date.now();
+        
+        const nuevaOrden = await Orders.create({
+            orderID: nuevoOrderID,
             RTN,
-            vendedor: null,
+            vendedor: null, 
             status: status || 'Pendiente' 
         });
 
-        res.status(201).json({ message: 'Orden creada exitosamente', data: created });
+        if (orderDetails && orderDetails.length > 0) {
+            for (let i = 0; i < orderDetails.length; i++) {
+                const item = orderDetails[i];
+
+                await OrderDetails.create({
+                    orderDetailID: "DET-" + Date.now() + "-" + i, 
+                    orderID: nuevaOrden.orderID,
+                    productID: item.productID,
+                    quantity: item.quantity,
+                    pricePerItem: item.price
+                });
+            }
+        }
+
+        res.status(201).json({ 
+            message: 'Orden y detalles creados exitosamente', 
+            orderID: nuevaOrden.orderID,
+            data: nuevaOrden 
+        });
+
     } catch (error) {         
+        console.error("Error al procesar checkout:", error);
         res.status(500).json({ error: error.message });
     }
 };
@@ -25,7 +119,7 @@ const modifyOrderStatus = async (req, res) => {
     try {
         const { orderID } = req.params;
         const { status } = req.body;
-        const order = await Order.findByPk(orderID);
+        const order = await Orders.findByPk(orderID);
         if (!order) return res.status(404).json({ error: 'Orden no encontrada' });
 
         await order.update({ status });
@@ -42,7 +136,7 @@ const getOrdersByDateRange = async (req, res) => {
             return res.status(400).json({ error: 'Faltan fechas start/end' });
         }
 
-        const orders = await Order.findAll({
+        const orders = await Orders.findAll({
             where: {
                 createdAt: {
                     [Op.between]: [`${startDate}T00:00:00.000Z`, `${endDate}T23:59:59.999Z`]
@@ -59,7 +153,7 @@ const getOrdersByDateRange = async (req, res) => {
 const getOrdersByVendor = async (req, res) => {
     try {
         const { vendedor } = req.params;
-        const orders = await Order.findAll({
+        const orders = await Orders.findAll({
             where: { vendedor, status: 'Asignada' }
         });
         res.json({ count: orders.length, data: orders });
@@ -71,7 +165,7 @@ const getOrdersByVendor = async (req, res) => {
 const getOrdersByClient = async (req, res) => {
     try {
         const { RTN } = req.params;
-        const orders = await Order.findAll({ where: { RTN } });
+        const orders = await Orders.findAll({ where: { RTN } });
         res.json({ count: orders.length, data: orders });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -81,8 +175,7 @@ const getOrdersByClient = async (req, res) => {
 const asignarOrden = async (req, res) => {
     try {
         const { orderID, vendedor } = req.params;
-
-        const order = await Order.findByPk(orderID);
+        const order = await Orders.findByPk(orderID);
         if (!order) return res.status(404).json({ error: 'Orden no encontrada' });
 
         const userExists = await Users.findByPk(vendedor);
@@ -99,7 +192,7 @@ const asignarOrden = async (req, res) => {
 const solicitarCancelacion = async (req, res) => {
     try {
         const { orderID } = req.params;
-        const order = await Order.findByPk(orderID);
+        const order = await Orders.findByPk(orderID);
         if (!order) return res.status(404).json({ error: 'Orden no encontrada' });
 
         await order.update({ status: 'Cancelacion Pendiente' });
@@ -112,7 +205,7 @@ const solicitarCancelacion = async (req, res) => {
 const aprobarCancelacion = async (req, res) => {
     try {
         const { orderID } = req.params;
-        const order = await Order.findByPk(orderID);
+        const order = await Orders.findByPk(orderID);
         if (!order) return res.status(404).json({ error: 'Orden no encontrada' });
 
         await order.update({ status: 'Cancelada' });
@@ -130,5 +223,6 @@ module.exports = {
     getOrdersByClient,
     asignarOrden,
     solicitarCancelacion,
-    aprobarCancelacion
+    aprobarCancelacion,
+    getStats
 };
